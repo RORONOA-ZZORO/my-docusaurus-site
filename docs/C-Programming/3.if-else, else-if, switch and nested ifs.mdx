@@ -1,0 +1,249 @@
+---
+id: unit3-decision-making
+title: "🎯 Unit 3: Decision Making and Branching"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 🎯 Unit 3: Decision Making and Branching
+
+Welcome back, coder! 🚀  
+This time, we’re learning how to make our C programs **think and choose**. Yep — like teaching your code how to make decisions.  
+
+---
+
+## 🤔 Introduction to Decision Making
+
+Decision making structures let programs choose different paths depending on conditions.  
+Think of it like asking: *“If it’s raining, should I take an umbrella? If not, sunglasses!”* 😎☔
+
+C gives us:
+
+1. ✅ Simple if  
+2. ✅ if-else  
+3. ✅ Nested if  
+4. ✅ else-if ladder  
+5. ✅ switch-case  
+
+---
+
+## 🔹 The if Statement
+
+### Syntax
+```c
+if (condition) {
+    // Executes if condition is true
+}
+```
+
+Flow:
+
+```
+Condition → True → Run block
+          → False → Skip block
+```
+
+### Example
+```c
+#include <stdio.h>
+
+int main() {
+    int age = 20;
+    if (age >= 18) {
+        printf("You are eligible to vote.\n");
+    }
+    printf("Thank you!\n");
+    return 0;
+}
+```
+
+💡 **Tip:** if doesn’t need an else. It can stand alone.
+
+---
+
+## 🔸 The if-else Statement
+
+Gives us two paths — one for true, one for false.
+
+```c
+if (condition) {
+    // True path
+} else {
+    // False path
+}
+```
+
+### Example: Even or Odd
+<Tabs>
+  <TabItem value="code" label="Code">
+  
+```c
+#include <stdio.h>
+
+int main() {
+    int number;
+    printf("Enter a number: ");
+    scanf("%d", &number);
+
+    if (number % 2 == 0) {
+        printf("%d is even.\n", number);
+    } else {
+        printf("%d is odd.\n", number);
+    }
+    return 0;
+}
+```
+
+  </TabItem>
+  <TabItem value="output" label="Sample Run">
+  
+```
+Enter a number: 7
+7 is odd.
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## 🔹 Nested if Statements
+
+One if inside another.
+
+```c
+if (condition1) {
+    if (condition2) {
+        // Both true
+    } else {
+        // Only condition1 true
+    }
+} else {
+    // condition1 false
+}
+```
+
+### Example: Driving Eligibility
+```c
+if (age >= 18) {
+    if (hasLicense == 'y') {
+        printf("You can drive!\n");
+    } else {
+        printf("You need a license.\n");
+    }
+} else {
+    printf("You must be 18+.\n");
+}
+```
+
+---
+
+## 🔸 The else-if Ladder
+
+Perfect for checking multiple conditions.
+
+```c
+if (marks >= 90) grade = 'A';
+else if (marks >= 80) grade = 'B';
+else if (marks >= 70) grade = 'C';
+else grade = 'F';
+```
+
+### Example: Grade Calculator
+```c
+if (marks < 0 || marks > 100) {
+    printf("Invalid!\n");
+} else if (marks >= 90) {
+    printf("Grade A\n");
+} else if (marks >= 80) {
+    printf("Grade B\n");
+} else {
+    printf("Grade C or below\n");
+}
+```
+
+---
+
+## 🔹 The switch-case Statement
+
+Efficient multi-way branching.
+
+```c
+switch (expression) {
+    case value1: // do something
+        break;
+    case value2:
+        break;
+    default:
+        // fallback
+}
+```
+
+### Rules  
+- Expression must be int/char  
+- Case values = constants only  
+- `break` prevents fall-through  
+- `default` is optional but useful  
+
+### Example: Calculator
+```c
+switch(op) {
+    case '+': result = a + b; break;
+    case '-': result = a - b; break;
+    case '*': result = a * b; break;
+    case '/': 
+        if (b != 0) result = a / b;
+        else printf("Division by 0!\n");
+        break;
+    default: printf("Invalid operator\n");
+}
+```
+
+---
+
+## ⚖️ if-else vs switch
+
+| Feature | if-else | switch |
+|---------|---------|---------|
+| Condition type | Any | int/char only |
+| Multiple checks | ✅ Flexible | ❌ Only equality |
+| Floating point | ✅ Yes | ❌ No |
+| Range checking | ✅ Easy | ❌ Hard |
+| Performance | Slower for many checks | Faster for many cases |
+| Best for | Complex conditions | Menu-driven apps |
+
+---
+
+## 🧪 Practical Mini Projects
+
+### Leap Year Checker
+```c
+if (year % 400 == 0) leap = 1;
+else if (year % 100 == 0) leap = 0;
+else if (year % 4 == 0) leap = 1;
+else leap = 0;
+```
+
+### Triangle Validator
+Checks if sides form a triangle and its type (Equilateral, Isosceles, Scalene).
+
+### Student Grade System
+Use **if-else ladder** for grades + **switch** for remarks. Perfect combo!
+
+---
+
+## 🎓 Quick Quiz
+
+Which statement is **faster** for checking 10 fixed integer values?
+
+- [ ] if-else ladder  
+- [x] switch-case ✅  
+- [ ] Nested if  
+- [ ] None of the above  
+
+---
+
+👏 That’s it for Unit 3!  
+Now your code can **decide, branch, and react** like a pro.  
+Next stop: **Unit 4: Loops** 🔄  

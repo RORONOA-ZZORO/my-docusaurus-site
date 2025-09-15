@@ -1,0 +1,358 @@
+---
+id: unit5-arrays
+title: "🎲 Unit 5: Arrays Made Simple"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 🎲 Unit 5: Arrays Made Simple
+
+Welcome back, eager learner! 👋  
+Today we’re exploring **Arrays** — a magical way of keeping lots of values in one tidy place.  
+Instead of juggling variables everywhere, arrays let you line them up neatly like books on a shelf. 📚
+
+---
+
+## 🌟 Why Use Arrays?
+
+:::info Imagine This
+Without arrays, managing 100 student marks means writing 100 separate variables. 😵  
+With arrays, you just say: *“Hey, here’s one variable that can hold 100 values!”*
+:::
+
+<Tabs>
+  <TabItem value="without" label="Without Arrays">
+
+```c
+int student1 = 85;
+int student2 = 90;
+int student3 = 78;
+int student4 = 92;
+int student5 = 88;
+// Imagine managing 100 students!
+```
+
+  </TabItem>
+  <TabItem value="with" label="With Arrays">
+
+```c
+int students[5] = {85, 90, 78, 92, 88};
+// Can easily manage any number of students
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## 🔑 Key Characteristics
+
+| Property | Description |
+|----------|-------------|
+| **Fixed Size** | Decide size at declaration |
+| **Same Data Type** | All elements must be of same type |
+| **Contiguous Memory** | Stored side by side in memory |
+| **Zero-Indexed** | First element is at index `0` |
+| **Random Access** | Access any element directly |
+
+---
+
+## 🎯 One-Dimensional Arrays
+
+### 📜 Declaration Syntax
+
+```c
+datatype array_name[size];
+
+// Examples
+int numbers[10];      // Array of 10 integers
+float prices[50];     // Array of 50 floats
+char name[30];        // Array of 30 characters (string)
+```
+
+### 🌱 Initialization Styles
+
+<Tabs>
+  <TabItem value="declare" label="Declare with Values">
+
+```c
+int marks[5] = {85, 90, 78, 92, 88};
+```
+
+  </TabItem>
+  <TabItem value="partial" label="Partial Initialization">
+
+```c
+int scores[10] = {1, 2, 3};  // Rest become 0
+```
+
+  </TabItem>
+  <TabItem value="size-infer" label="Size Inferred">
+
+```c
+int nums[] = {10, 20, 30, 40}; // Size = 4
+```
+
+  </TabItem>
+  <TabItem value="zeros" label="All Zeros">
+
+```c
+int zeros[100] = {0};
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## 🧠 Memory Representation
+
+```
+Array: int arr[5] = {10, 20, 30, 40, 50};
+
+Memory:
+Address:  1000   1004   1008   1012   1016
+        ┌──────┬──────┬──────┬──────┬──────┐
+Value:  │  10  │  20  │  30  │  40  │  50  │
+        └──────┴──────┴──────┴──────┴──────┘
+Index:     0      1      2      3      4
+```
+
+---
+
+## 🛠 Accessing Array Elements
+
+<Tabs>
+  <TabItem value="code" label="Code">
+
+```c
+#include <stdio.h>
+
+int main() {
+    int arr[5] = {10, 20, 30, 40, 50};
+    
+    printf("First element: %d\n", arr[0]);
+    printf("Last element: %d\n", arr[4]);
+    
+    arr[2] = 35;
+    printf("Modified third element: %d\n", arr[2]);
+    
+    printf("\nAll elements:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("arr[%d] = %d\n", i, arr[i]);
+    }
+    
+    return 0;
+}
+```
+
+  </TabItem>
+  <TabItem value="output" label="Output (Example)">
+
+```
+First element: 10
+Last element: 50
+Modified third element: 35
+
+All elements:
+arr[0] = 10
+arr[1] = 20
+arr[2] = 35
+arr[3] = 40
+arr[4] = 50
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## 📝 Input and Output with Arrays
+
+```c
+#include <stdio.h>
+
+int main() {
+    int n, marks[50];
+    
+    printf("Enter number of students: ");
+    scanf("%d", &n);
+    
+    for (int i = 0; i < n; i++) {
+        printf("Student %d: ", i + 1);
+        scanf("%d", &marks[i]);
+    }
+    
+    printf("\nMarks entered:\n");
+    for (int i = 0; i < n; i++) {
+        printf("Student %d: %d\n", i + 1, marks[i]);
+    }
+    
+    return 0;
+}
+```
+
+---
+
+## 🔍 Searching in Arrays
+
+<Tabs>
+  <TabItem value="linear" label="Linear Search">
+
+```c
+int linearSearch(int arr[], int n, int key) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == key) return i;
+    }
+    return -1;
+}
+```
+
+  </TabItem>
+  <TabItem value="binary" label="Binary Search (Sorted Array)">
+
+```c
+int binarySearch(int arr[], int n, int key) {
+    int left = 0, right = n - 1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (arr[mid] == key) return mid;
+        else if (arr[mid] < key) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## 🌀 Sorting Arrays
+
+<Tabs>
+  <TabItem value="bubble" label="Bubble Sort">
+
+```c
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="selection" label="Selection Sort">
+
+```c
+void selectionSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIndex]) minIndex = j;
+        }
+        int temp = arr[minIndex];
+        arr[minIndex] = arr[i];
+        arr[i] = temp;
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## 🧵 Strings (Character Arrays)
+
+<Tabs>
+  <TabItem value="char" label="Character Array">
+
+```c
+char name[50];
+char greeting[20] = "Hello";
+char message[] = "Welcome to C!";
+```
+
+  </TabItem>
+  <TabItem value="string" label="String Input">
+
+```c
+char sentence[100];
+scanf(" %[^
+]", sentence);
+printf("Sentence: %s", sentence);
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## 🔢 Two-Dimensional Arrays
+
+<Tabs>
+  <TabItem value="declare" label="Declaration & Init">
+
+```c
+int arr2D[3][3] = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+```
+
+  </TabItem>
+  <TabItem value="matrix" label="Matrix Display">
+
+```c
+for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+        printf("%3d ", arr2D[i][j]);
+    }
+    printf("\n");
+}
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## 🏆 Common Problems to Try
+
+- 🔄 Reverse an array  
+- 🥈 Find the second largest element  
+- 🚫 Remove duplicates  
+
+---
+
+## ⚠️ Limitations & Best Practices
+
+- Size is **fixed** at compile-time  
+- No automatic bounds checking (be careful!)  
+- Use constants for array sizes  
+- Always initialize arrays to avoid garbage values  
+
+```c
+#define MAX_SIZE 100
+int arr[MAX_SIZE] = {0};
+```
+
+---
+
+## 🎓 Quick Quiz
+
+What is the index of the first element in a C array?  
+
+- [ ] 1  
+- [x] 0 ✅  
+- [ ] -1  

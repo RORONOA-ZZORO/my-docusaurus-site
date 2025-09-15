@@ -1,0 +1,247 @@
+---
+id: unit4-loops
+title: "🔄 Unit 4: Concepts of Loops"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 🔄 Unit 4: Concepts of Loops
+
+Welcome, coder! 👋  
+In this unit, we’ll explore **loops** — the magic that lets your program repeat tasks automatically, without writing the same code 100 times.  
+
+---
+
+## 🤔 Why Use Loops?
+
+Imagine printing numbers 1 to 100:
+
+```c
+// Without loops (boring and impractical)
+printf("1\n");
+printf("2\n");
+printf("3\n");
+// ... 97 more times!
+
+// With loops (much better)
+for (int i = 1; i <= 100; i++) {
+    printf("%d\n", i);
+}
+```
+
+That’s the power of loops! 🚀
+
+---
+
+## 🔹 Types of Loops in C
+
+| Loop Type | When to Use | Special Feature |
+|-----------|-------------|-----------------|
+| **while** | Iterations unknown | Condition checked first |
+| **do-while** | Must run at least once | Condition checked last |
+| **for** | Iterations known | All parts in header |
+
+---
+
+## 🔸 The while Loop
+
+Repeats while the condition is true.
+
+### Syntax
+```c
+initialization;
+while (condition) {
+    // repeat code
+    update;
+}
+```
+
+### Example: Print Numbers
+```c
+int i = 1;
+while (i <= 5) {
+    printf("Number: %d\n", i);
+    i++;
+}
+```
+
+### Example: Sum of Natural Numbers
+```c
+int n, sum = 0, i = 1;
+scanf("%d", &n);
+while (i <= n) {
+    sum += i;
+    i++;
+}
+printf("Sum = %d\n", sum);
+```
+
+---
+
+## 🔹 The do-while Loop
+
+Executes **once before checking** the condition.
+
+### Syntax
+```c
+do {
+    // code
+    update;
+} while (condition);
+```
+
+### Example
+```c
+int y = 10;
+do {
+    printf("This will print at least once!\n");
+} while (y < 5);
+```
+
+### Example: Menu Program
+<Tabs>
+  <TabItem value="menu" label="Menu Code">
+
+```c
+int choice;
+do {
+    printf("1. Add\n2. Subtract\n3. Exit\n");
+    scanf("%d", &choice);
+    // process choice
+} while (choice != 3);
+```
+
+  </TabItem>
+  <TabItem value="note" label="Why do-while?">
+
+Even if the user picks "Exit" the first time,  
+the menu still **shows once**!  
+That’s why do-while is great for menus.
+
+  </TabItem>
+</Tabs>
+
+---
+
+## 🔸 The for Loop
+
+Best when the number of iterations is known.
+
+### Syntax
+```c
+for (init; condition; update) {
+    // repeat code
+}
+```
+
+### Example: Multiplication Table
+```c
+int num;
+scanf("%d", &num);
+for (int i = 1; i <= 10; i++) {
+    printf("%d × %d = %d\n", num, i, num * i);
+}
+```
+
+### Example: Factorial
+```c
+int n; unsigned long long fact = 1;
+scanf("%d", &n);
+for (int i = 1; i <= n; i++) {
+    fact *= i;
+}
+printf("%d! = %llu\n", n, fact);
+```
+
+---
+
+## 🔹 Nested Loops
+
+Loops inside loops.
+
+### Example: Pattern Printing
+```c
+for (int i = 1; i <= 5; i++) {
+    for (int j = 1; j <= i; j++) {
+        printf("* ");
+    }
+    printf("\n");
+}
+```
+
+Output:
+```
+*
+* *
+* * *
+* * * *
+* * * * *
+```
+
+---
+
+## 🎮 Loop Control Statements
+
+### break
+Exits loop immediately.
+
+```c
+for (int i = 1; i <= 10; i++) {
+    if (i == 5) break;  
+    printf("%d ", i);
+}
+```
+
+### continue
+Skips current iteration.
+
+```c
+for (int i = 1; i <= 10; i++) {
+    if (i % 3 == 0) continue;  
+    printf("%d ", i);
+}
+```
+
+---
+
+## ⚡ Loop Variations
+
+### Infinite Loops
+```c
+while (1) { /* runs forever */ }
+for (;;) { /* also infinite */ }
+```
+
+### Flexible for Loop
+```c
+for (int i = 0, j = 10; i < 5; i++, j--) {
+    printf("i=%d, j=%d\n", i, j);
+}
+```
+
+---
+
+## 🧪 Practice Problems
+
+1. ✅ Prime Checker (using for loop)  
+2. ✅ Fibonacci Series  
+3. ✅ Armstrong Number Checker  
+4. ✅ Pattern Programs (hollow rectangle, diamond, Floyd’s triangle)  
+
+---
+
+## 🎓 Quick Quiz
+
+Which loop **always executes at least once**?
+
+- [ ] while  
+- [x] do-while ✅  
+- [ ] for  
+- [ ] None  
+
+---
+
+👏 That’s it for Unit 4!  
+You can now **repeat, automate, and generate patterns** like a coding wizard 🧙‍♂️.  
+Next up: **Unit 5 — Arrays** 📦  

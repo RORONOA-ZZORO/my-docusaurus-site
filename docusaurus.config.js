@@ -40,6 +40,11 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
+  themes: ['@docusaurus/theme-mermaid'],
+markdown: {
+  mermaid: true,
+},
+
 
   presets: [
     [
@@ -91,7 +96,7 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Docs',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {

@@ -1,9 +1,10 @@
 import React from 'react';
-import DocItemFooterOriginal from '@theme-original/DocItemFooter';
 import {useDoc} from '@docusaurus/theme-common/internal';
 
 export default function DocItemFooterWrapper(props) {
   const {metadata} = useDoc();
+  
+  // Get timestamp and author
   const lastUpdatedAt = metadata?.lastUpdatedAt;
   const lastUpdatedBy = metadata?.lastUpdatedBy;
 
@@ -28,23 +29,23 @@ export default function DocItemFooterWrapper(props) {
 
   const formattedTime = formatTimestamp(lastUpdatedAt);
 
+  // Only render custom footer if we have timestamp data
+  if (!formattedTime) {
+    return null;
+  }
+
   return (
-    <>
-      <DocItemFooterOriginal {...props} />
-      {formattedTime && (
-        <div style={{
-          marginTop: '2rem',
-          paddingTop: '1rem',
-          borderTop: '1px solid #e5e7eb',
-          fontSize: '0.875rem',
-          color: '#6b7280',
-        }}>
-          <p style={{margin: 0}}>
-            📅 <strong>Last updated:</strong> {formattedTime}
-            {lastUpdatedBy && <> by <strong>{lastUpdatedBy}</strong></>}
-          </p>
-        </div>
-      )}
-    </>
+    <div style={{
+      marginTop: '2rem',
+      paddingTop: '1rem',
+      borderTop: '1px solid #e5e7eb',
+      fontSize: '0.875rem',
+      color: '#6b7280',
+    }}>
+      <p style={{margin: 0, fontWeight: '500'}}>
+        📅 <strong>Last updated:</strong> {formattedTime}
+        {lastUpdatedBy && <> by <strong>{lastUpdatedBy}</strong></>}
+      </p>
+    </div>
   );
 }

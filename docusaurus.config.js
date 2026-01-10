@@ -40,6 +40,18 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
+  // Custom locale data for date formatting with seconds
+  customFields: {
+    dateFormat: {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    }
+  },
   themes: ['@docusaurus/theme-mermaid'],
 markdown: {
   mermaid: true,
@@ -57,6 +69,8 @@ markdown: {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/Shivansh-bind/my-docusaurus-site/tree/main/',
+          showLastUpdateTime: true,
+          showLastUpdateAuthor: true,
         },
         blog: {
           showReadingTime: true,

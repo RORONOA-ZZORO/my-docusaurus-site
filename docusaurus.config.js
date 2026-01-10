@@ -114,7 +114,7 @@ markdown: {
             items: [
               {
                 label: 'Orientation',
-                to: '/docs/INTRO/intro',
+                to: '/docs/INTRO/',
               },
             ],
           },

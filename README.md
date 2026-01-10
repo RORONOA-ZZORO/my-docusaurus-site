@@ -236,29 +236,3 @@ If this project helps students:
 * ⭐ Star this repo
 * 🐛 Open issues for improvements
 * ✅ Contribute content/notes/structure updates
-
----
-
-```
-
----
-
-## What you should do right now
-1) Open the README edit link you sent  
-2) Paste the content above  
-3) Commit message suggestion:
-
-✅ `docs: update README with contributor guide + team credits`
-
----
-
-If you want, I can also generate **the rest of the repo “home setup” files** in the same style:
-
-- `CONTRIBUTING.md`
-- `CODE_OF_CONDUCT.md`
-- `.github/PULL_REQUEST_TEMPLATE.md`
-- `.github/ISSUE_TEMPLATE/`
-
-Just say **“Yes generate all”** and I’ll give you copy-paste ready files.
-::contentReference[oaicite:0]{index=0}
-```

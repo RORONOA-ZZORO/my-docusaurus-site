@@ -66,8 +66,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
               return NavigationDecision.prevent;
             }
 
-            // If link is relative, force-load the resolved absolute url
-            if (!req.url.startsWith('http')) {
+            // Detection: if we modified the URL (e.g. fixed %2520) OR it was relative
+            // then we MUST force-load the clean absolute URL.
+            if (resolved.toString() != req.url) {
               _controller.loadRequest(resolved);
               return NavigationDecision.prevent;
             }

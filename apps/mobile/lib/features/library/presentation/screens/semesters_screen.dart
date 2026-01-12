@@ -28,13 +28,13 @@ class SemestersScreen extends ConsumerWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
-                tileColor:
-                    Theme.of(context).colorScheme.surfaceContainerHighest,
+                tileColor: Theme.of(
+                  context,
+                ).colorScheme.surfaceContainerHighest,
                 title: Text(s.name),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => context.go(
-                  '/semester/${Uri.encodeComponent(s.name)}',
-                ),
+                onTap: () =>
+                    context.go('/semester/${Uri.encodeComponent(s.name)}'),
               );
             },
             separatorBuilder: (_, __) => const SizedBox(height: 12),

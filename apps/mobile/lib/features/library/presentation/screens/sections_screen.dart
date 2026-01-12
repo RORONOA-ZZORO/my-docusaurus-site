@@ -22,10 +22,12 @@ class SectionsScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(subjectName)),
       body: asyncIndex.when(
         data: (index) {
-          final semester =
-              index.semesters.firstWhere((s) => s.name == semesterName);
-          final subject =
-              semester.subjects.firstWhere((s) => s.name == subjectName);
+          final semester = index.semesters.firstWhere(
+            (s) => s.name == semesterName,
+          );
+          final subject = semester.subjects.firstWhere(
+            (s) => s.name == subjectName,
+          );
 
           final sections = subject.sections;
           if (sections.isEmpty) {
@@ -40,8 +42,9 @@ class SectionsScreen extends ConsumerWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
-                tileColor:
-                    Theme.of(context).colorScheme.surfaceContainerHighest,
+                tileColor: Theme.of(
+                  context,
+                ).colorScheme.surfaceContainerHighest,
                 title: Text(sec.name),
                 subtitle: Text('${sec.items.length} items'),
                 trailing: const Icon(Icons.chevron_right),

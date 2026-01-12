@@ -34,8 +34,9 @@ class SubjectsScreen extends ConsumerWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
-                tileColor:
-                    Theme.of(context).colorScheme.surfaceContainerHighest,
+                tileColor: Theme.of(
+                  context,
+                ).colorScheme.surfaceContainerHighest,
                 title: Text(s.name),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => context.go(

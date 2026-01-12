@@ -27,12 +27,15 @@ class ItemsScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(sectionName)),
       body: asyncIndex.when(
         data: (index) {
-          final semester =
-              index.semesters.firstWhere((s) => s.name == semesterName);
-          final subject =
-              semester.subjects.firstWhere((s) => s.name == subjectName);
-          final section =
-              subject.sections.firstWhere((s) => s.name == sectionName);
+          final semester = index.semesters.firstWhere(
+            (s) => s.name == semesterName,
+          );
+          final subject = semester.subjects.firstWhere(
+            (s) => s.name == subjectName,
+          );
+          final section = subject.sections.firstWhere(
+            (s) => s.name == sectionName,
+          );
 
           final items = section.items;
           if (items.isEmpty) {
@@ -74,10 +77,8 @@ class _ItemTile extends StatelessWidget {
       title: Text(item.title),
       subtitle: Text(item.type),
       trailing: const Icon(Icons.open_in_new),
-      onTap: () => context.go(
-        '/reader',
-        extra: {'url': fixedUrl, 'title': item.title},
-      ),
+      onTap: () =>
+          context.go('/reader', extra: {'url': fixedUrl, 'title': item.title}),
     );
   }
 }

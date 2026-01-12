@@ -79,6 +79,11 @@ class _ReaderScreenState extends State<ReaderScreen> {
   }
 
   Uri _resolveUrl(String raw) {
+    // Robustness: fix accidental double-encoding from source
+    if (raw.contains('%2520')) {
+      raw = raw.replaceAll('%2520', '%20');
+    }
+
     final uri = Uri.parse(raw);
 
     // Already absolute
@@ -88,11 +93,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
 
     // root-relative
     if (raw.startsWith('/')) {
-      return Uri.parse(AppConstants.siteOrigin).replace(
-        path: raw,
-        query: uri.query,
-        fragment: uri.fragment,
-      );
+      return Uri.parse(
+        AppConstants.siteOrigin,
+      ).replace(path: raw, query: uri.query, fragment: uri.fragment);
     }
 
     // relative to current page
@@ -161,7 +164,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-              )
+              ),
           ],
         ),
       ),

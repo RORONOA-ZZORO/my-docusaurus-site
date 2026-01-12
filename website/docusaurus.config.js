@@ -28,7 +28,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'shivansh-bind', // Usually your GitHub org/user name.
-  projectName: 'IMPACT REFERENCE LIBRARY', // Usually your repo name.
+  projectName: 'my-docusaurus-site', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',

@@ -127,6 +127,7 @@ class PackStorageManager {
   }
 
   /// Validate a pack directory (check manifest exists and parses)
+  /// Fix #4: Check that first 5 HTML files actually exist
   Future<bool> validatePack(Directory packDir) async {
     final manifestFile = File('${packDir.path}/$_manifestFileName');
 
@@ -146,12 +147,22 @@ class PackStorageManager {
         return false;
       }
 
-      // Check that at least one HTML file exists
-      final firstDoc = manifest.docs.values.first;
-      final htmlPath = '${packDir.path}/${firstDoc.html}';
-      if (!await File(htmlPath).exists()) {
+      // Fix #4: Check that first 5 HTML files actually exist
+      final docsToCheck = manifest.docs.values.take(5).toList();
+      int missingCount = 0;
+
+      for (final doc in docsToCheck) {
+        final htmlPath = '${packDir.path}/${doc.html}';
+        if (!await File(htmlPath).exists()) {
+          debugPrint('PackStorageManager: Missing HTML: $htmlPath');
+          missingCount++;
+        }
+      }
+
+      // Fail if more than half of checked docs are missing
+      if (missingCount > docsToCheck.length / 2) {
         debugPrint(
-            'PackStorageManager: Validation failed - missing HTML: $htmlPath');
+            'PackStorageManager: Validation failed - too many missing HTMLs ($missingCount/${docsToCheck.length})');
         return false;
       }
 

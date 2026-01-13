@@ -84,9 +84,21 @@ class _ReaderScreenState extends State<ReaderScreen> {
       return NavigationDecision.navigate;
     }
 
-    // Handle app://doc/<docId> links (internal navigation)
+    // Fix #5: Handle app://doc/<docId> AND app://doc?id=<docId> links
     if (uri.scheme == 'app' && uri.host == 'doc') {
-      final docId = uri.pathSegments.isNotEmpty ? uri.pathSegments[0] : null;
+      String? docId;
+
+      // Try path format: app://doc/<docId>
+      if (uri.pathSegments.isNotEmpty) {
+        docId = uri.pathSegments[0];
+      }
+
+      // Try query format: app://doc?id=<docId>
+      if ((docId == null || docId.isEmpty) &&
+          uri.queryParameters.containsKey('id')) {
+        docId = uri.queryParameters['id'];
+      }
+
       if (docId != null && docId.isNotEmpty) {
         // Navigate to the new doc within the app
         await _loadDoc(docId);

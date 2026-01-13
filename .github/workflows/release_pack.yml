@@ -32,11 +32,11 @@ jobs:
             content_build/package-lock.json
       
       - name: Install website dependencies
-        run: npm ci
+        run: npm install
         working-directory: website
       
       - name: Install content_build dependencies
-        run: npm ci
+        run: npm install
         working-directory: content_build
       
       - name: Build Docusaurus site

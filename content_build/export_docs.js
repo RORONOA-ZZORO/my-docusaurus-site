@@ -159,7 +159,7 @@ function extractAndCleanHtml(html, routeToDocId) {
         }
     }
     
-    // Rewrite links
+    // Rewrite ALL internal links starting with /docs/ to app://doc/docId
     const anchors = article.querySelectorAll('a[href]');
     for (const anchor of anchors) {
         let href = anchor.getAttribute('href');
@@ -172,10 +172,26 @@ function extractAndCleanHtml(html, routeToDocId) {
             continue;
         }
         
-        // Try to match to a docId
-        let targetPath = href.replace(/\/$/, '');
+        // Convert /docs/... paths to docIds directly
+        if (href.startsWith('/docs/') || href.startsWith('/docs\\')) {
+            // Remove /docs/ prefix and trailing slash
+            let path = href.replace(/^\/docs\//, '').replace(/\/$/, '');
+            
+            // Generate docId using same logic as file export
+            const docId = path
+                .replace(/[/\\]/g, '_')
+                .replace(/[^a-zA-Z0-9_]/g, '_')
+                .replace(/_+/g, '_')
+                .replace(/^_|_$/g, '')
+                .toLowerCase();
+            
+            const fragment = href.includes('#') ? href.substring(href.indexOf('#')) : '';
+            anchor.setAttribute('href', `app://doc/${docId}${fragment}`);
+            continue;
+        }
         
-        // Look up docId
+        // Try routeToDocId lookup for other paths
+        let targetPath = href.replace(/\/$/, '');
         const docId = routeToDocId.get(targetPath) || 
                       routeToDocId.get(targetPath.toLowerCase()) ||
                       routeToDocId.get(decodeURIComponent(targetPath));

@@ -83,6 +83,61 @@ tr:nth-child(even) { background: #fafafa; }
 img { max-width: 100%; height: auto; border-radius: 8px; margin: 1em 0; }
 hr { border: none; border-top: 1px solid #eee; margin: 2em 0; }
 .hash-link { display: none; }
+
+/* Unit Navigation Footer */
+.rl-unit-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    margin: 24px 0 8px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+}
+.rl-unit-nav a {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 16px;
+    background: #fff;
+    border-radius: 8px;
+    color: #0066cc;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+.rl-unit-nav a:hover {
+    background: #0066cc;
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,102,204,0.3);
+}
+.rl-unit-nav a.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* Backlinks Block */
+.rl-backlinks {
+    margin: 24px 0;
+    padding: 16px;
+    background: #f0f7ff;
+    border-radius: 12px;
+    border-left: 4px solid #0066cc;
+}
+.rl-backlinks h3 {
+    margin: 0 0 12px;
+    font-size: 1em;
+    color: #0066cc;
+}
+.rl-backlinks ul {
+    margin: 0;
+    padding-left: 20px;
+}
+.rl-backlinks li {
+    margin: 8px 0;
+}
 </style>
 `;
 
@@ -126,8 +181,13 @@ function findAllHtmlFiles(dir, basePath = dir) {
 
 /**
  * Extract article content from Docusaurus HTML and create clean HTML
+ * @param {string} html - Raw HTML from Docusaurus build
+ * @param {Map} routeToDocId - Map of routes to docIds for link rewriting
+ * @param {string} docId - Current document ID
+ * @param {Object} relations - Relations object with nextPrev data
+ * @param {Object} backlinks - Backlinks for this doc (optional)
  */
-function extractAndCleanHtml(html, routeToDocId) {
+function extractAndCleanHtml(html, routeToDocId, docId = null, relations = null, backlinks = null) {
     const dom = new JSDOM(html);
     const doc = dom.window.document;
     
@@ -178,7 +238,7 @@ function extractAndCleanHtml(html, routeToDocId) {
             let path = href.replace(/^\/docs\//, '').replace(/\/$/, '');
             
             // Generate docId using same logic as file export
-            const docId = path
+            const targetDocId = path
                 .replace(/[/\\]/g, '_')
                 .replace(/[^a-zA-Z0-9_]/g, '_')
                 .replace(/_+/g, '_')
@@ -186,19 +246,19 @@ function extractAndCleanHtml(html, routeToDocId) {
                 .toLowerCase();
             
             const fragment = href.includes('#') ? href.substring(href.indexOf('#')) : '';
-            anchor.setAttribute('href', `app://doc/${docId}${fragment}`);
+            anchor.setAttribute('href', `app://doc/${targetDocId}${fragment}`);
             continue;
         }
         
         // Try routeToDocId lookup for other paths
         let targetPath = href.replace(/\/$/, '');
-        const docId = routeToDocId.get(targetPath) || 
+        const mappedDocId = routeToDocId.get(targetPath) || 
                       routeToDocId.get(targetPath.toLowerCase()) ||
                       routeToDocId.get(decodeURIComponent(targetPath));
         
-        if (docId) {
+        if (mappedDocId) {
             const fragment = href.includes('#') ? href.substring(href.indexOf('#')) : '';
-            anchor.setAttribute('href', `app://doc/${docId}${fragment}`);
+            anchor.setAttribute('href', `app://doc/${mappedDocId}${fragment}`);
         }
     }
     
@@ -224,6 +284,47 @@ function extractAndCleanHtml(html, routeToDocId) {
         }
     });
     
+    // Get article content
+    let articleContent = article.innerHTML;
+    
+    // Inject Unit Navigation Footer if relations exist
+    let unitNavHtml = '';
+    if (docId && relations && relations.nextPrev && relations.nextPrev[docId]) {
+        const rel = relations.nextPrev[docId];
+        const prevLink = rel.prev 
+            ? `<a href="app://doc/${rel.prev}">⬅ Prev</a>` 
+            : `<a class="disabled">⬅ Prev</a>`;
+        const upLink = rel.up 
+            ? `<a href="app://doc/${rel.up}">⬆ Notes</a>` 
+            : '';
+        const nextLink = rel.next 
+            ? `<a href="app://doc/${rel.next}">Next ➡</a>` 
+            : `<a class="disabled">Next ➡</a>`;
+        
+        unitNavHtml = `
+<hr/>
+<div class="rl-unit-nav">
+  ${prevLink}
+  ${upLink}
+  ${nextLink}
+</div>`;
+    }
+    
+    // Inject Backlinks Block if they exist
+    let backlinksHtml = '';
+    if (docId && backlinks && backlinks[docId] && backlinks[docId].length > 0) {
+        const links = backlinks[docId]
+            .map(bl => `<li><a href="app://doc/${bl.targetDocId}">${bl.label}</a></li>`)
+            .join('\n');
+        backlinksHtml = `
+<div class="rl-backlinks">
+  <h3>📚 Related</h3>
+  <ul>
+    ${links}
+  </ul>
+</div>`;
+    }
+    
     // Build clean HTML document
     const cleanHtml = `<!DOCTYPE html>
 <html lang="en">
@@ -234,7 +335,9 @@ function extractAndCleanHtml(html, routeToDocId) {
 ${INLINE_STYLES}
 </head>
 <body>
-${article.innerHTML}
+${articleContent}
+${backlinksHtml}
+${unitNavHtml}
 </body>
 </html>`;
     
@@ -259,6 +362,78 @@ function buildRouteLookup(registry) {
     }
     
     return routeToDocId;
+}
+/**
+ * Build relations (prev/next/up) from exported docIds
+ * Groups units by course and generates sequential navigation
+ */
+function buildRelationsFromExport(exportedDocIds) {
+    const nextPrev = {};
+    const courseUnits = {};
+    
+    // Find all unit docs and group by course
+    for (const { docId, source } of exportedDocIds) {
+        // Detect if this is a unit doc (contains unit1, unit2, etc.)
+        const unitMatch = docId.match(/unit(\d+)/i) || docId.match(/_u(\d+)$/);
+        if (!unitMatch) continue;
+        
+        const unitNumber = parseInt(unitMatch[1], 10);
+        
+        // Extract course identifier (everything before _notes_unit or similar)
+        let course = docId.replace(/_notes_unit\d+.*$/i, '').replace(/_unit\d+.*$/i, '').replace(/_u\d+.*$/i, '');
+        if (!course) continue;
+        
+        if (!courseUnits[course]) {
+            courseUnits[course] = [];
+        }
+        
+        courseUnits[course].push({
+            docId,
+            number: unitNumber
+        });
+    }
+    
+    // Generate prev/next/up for each course
+    for (const [course, units] of Object.entries(courseUnits)) {
+        // Sort by unit number
+        units.sort((a, b) => a.number - b.number);
+        
+        // Find the notes index for this course
+        const notesIndex = findNotesIndexFromExport(course, exportedDocIds);
+        
+        for (let i = 0; i < units.length; i++) {
+            const unit = units[i];
+            nextPrev[unit.docId] = {
+                prev: i > 0 ? units[i - 1].docId : null,
+                next: i < units.length - 1 ? units[i + 1].docId : null,
+                up: notesIndex
+            };
+        }
+    }
+    
+    return { nextPrev };
+}
+
+/**
+ * Find notes index for a course from exported docs
+ */
+function findNotesIndexFromExport(course, exportedDocIds) {
+    // Try to find: course_notes or course_notes_index
+    for (const { docId } of exportedDocIds) {
+        // Match patterns like semester_1_c_programming_notes
+        if (docId === `${course}_notes` || docId === `${course}_notes_index`) {
+            return docId;
+        }
+    }
+    
+    // Fallback: find any notes doc that starts with course
+    for (const { docId } of exportedDocIds) {
+        if (docId.startsWith(course) && docId.includes('_notes') && !docId.match(/unit\d+/i)) {
+            return docId;
+        }
+    }
+    
+    return null;
 }
 
 /**
@@ -287,10 +462,11 @@ async function exportDocs() {
         fs.mkdirSync(CONTENT_DOCS_DIR, { recursive: true });
     }
     
-    // Export all HTML files
+    // First pass: export all HTML and build docId list
     let successCount = 0;
     let failCount = 0;
     const exported = {};
+    const exportedDocIds = [];
     
     for (const htmlFile of htmlFiles) {
         try {
@@ -304,23 +480,42 @@ async function exportDocs() {
             
             if (!docId) docId = 'root';
             
-            // Read and process HTML
+            exportedDocIds.push({
+                docId,
+                htmlFile,
+                source: htmlFile.relativePath
+            });
+            
+        } catch (e) {
+            console.error(`❌ Error processing ${htmlFile.relativePath}:`, e.message);
+            failCount++;
+        }
+    }
+    
+    // Build relations from exported docs
+    const relations = buildRelationsFromExport(exportedDocIds);
+    console.log(`↔️  Built relations for ${Object.keys(relations.nextPrev).length} unit docs`);
+    
+    // Second pass: export HTML with relations
+    for (const { docId, htmlFile, source } of exportedDocIds) {
+        try {
+            // Read and process HTML with relations
             const rawHtml = fs.readFileSync(htmlFile.absolutePath, 'utf-8');
-            const cleanHtml = extractAndCleanHtml(rawHtml, routeToDocId);
+            const cleanHtml = extractAndCleanHtml(rawHtml, routeToDocId, docId, relations, null);
             
             // Write output
             const outputPath = path.join(CONTENT_DOCS_DIR, `${docId}.html`);
             fs.writeFileSync(outputPath, cleanHtml, 'utf-8');
             
             exported[docId] = {
-                source: htmlFile.relativePath,
+                source: source,
                 output: `${docId}.html`
             };
             
             successCount++;
             console.log(`✅ Exported ${docId}`);
         } catch (e) {
-            console.error(`❌ Error exporting ${htmlFile.relativePath}:`, e.message);
+            console.error(`❌ Error exporting ${docId}:`, e.message);
             failCount++;
         }
     }

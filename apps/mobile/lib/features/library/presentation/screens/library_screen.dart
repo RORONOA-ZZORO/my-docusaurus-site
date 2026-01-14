@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../../core/providers/pack_providers.dart';
 import '../../domain/index_models.dart';
+import '../../../../core/providers/pack_providers.dart';
 
-/// Manifest-driven library navigation screen.
-/// Shows content tree from current pack's index.json.
+/// LibraryScreen - Main navigation screen using sidebarTree
+///
+/// Uses the new v2.1 manifest format:
+/// - sidebarTree: minimal sidebar (Semester → Subject → Essentials)
+/// - Index pages open in ReaderScreen where users can navigate deeper
 class LibraryScreen extends ConsumerWidget {
   const LibraryScreen({super.key});
 
@@ -20,177 +22,260 @@ class LibraryScreen extends ConsumerWidget {
         title: const Text('Reference Library'),
         actions: [
           // Pack version badge
-          packVersion.when(
-            data: (version) => version != null
-                ? Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: Center(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.blue.shade100,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          'v$version',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.blue.shade700,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                : const SizedBox.shrink(),
-            loading: () => const SizedBox.shrink(),
-            error: (_, __) => const SizedBox.shrink(),
-          ),
+          if (packVersion != null)
+            Container(
+              margin: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Text(
+                'v$packVersion',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+              ),
+            ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () => context.push('/settings'),
+            tooltip: 'Settings',
           ),
         ],
       ),
       body: manifestAsync.when(
         data: (manifest) {
           if (manifest == null) {
-            return const Center(
-              child: Text('No content pack installed'),
-            );
+            return _buildNoPack(context);
           }
-          return _buildTree(context, manifest);
+          return _buildNavigation(context, manifest);
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(
-          child: Text('Error loading manifest: $error'),
+        error: (error, stack) => Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.error_outline, size: 64, color: Colors.red[300]),
+                const SizedBox(height: 16),
+                Text(
+                  'Error loading content',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  error.toString(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey[600]),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildTree(BuildContext context, ContentManifest manifest) {
-    if (manifest.tree.isEmpty) {
+  Widget _buildNoPack(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.download_rounded, size: 64, color: Colors.grey[400]),
+          const SizedBox(height: 16),
+          const Text('No content pack installed'),
+          const SizedBox(height: 24),
+          FilledButton.icon(
+            onPressed: () => context.go('/'),
+            icon: const Icon(Icons.download),
+            label: const Text('Get Content'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNavigation(BuildContext context, ContentManifest manifest) {
+    // Use sidebarTree if available (v2.1), otherwise fall back to legacy tree
+    if (manifest.hasNewFormat && manifest.sidebarTree.isNotEmpty) {
+      return _buildSidebarTree(context, manifest.sidebarTree, manifest);
+    } else {
+      // Fallback for old manifest format
+      return _buildLegacyTree(context, manifest.tree, manifest);
+    }
+  }
+
+  /// Build navigation from new sidebarTree (v2.1)
+  Widget _buildSidebarTree(
+    BuildContext context,
+    List<SidebarNode> nodes,
+    ContentManifest manifest,
+  ) {
+    if (nodes.isEmpty) {
       return const Center(child: Text('No content available'));
     }
 
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      itemCount: manifest.tree.length,
+      itemCount: nodes.length,
       itemBuilder: (context, index) {
-        final node = manifest.tree[index];
-        return _buildSemesterTile(context, node, manifest);
+        return _buildSidebarNode(context, nodes[index], manifest, 0);
       },
     );
   }
 
-  Widget _buildSemesterTile(
+  Widget _buildSidebarNode(
     BuildContext context,
-    TreeNode semester,
+    SidebarNode node,
     ContentManifest manifest,
+    int depth,
   ) {
-    return ExpansionTile(
-      leading: const Icon(Icons.folder),
-      title: Text(
-        semester.title,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
-      children: semester.items?.map((subject) {
-            return _buildSubjectTile(context, subject, manifest);
-          }).toList() ??
-          [],
-    );
-  }
+    final hasChildren = node.items.isNotEmpty;
+    final hasDocId = node.docId != null;
 
-  Widget _buildSubjectTile(
-    BuildContext context,
-    TreeNode subject,
-    ContentManifest manifest,
-  ) {
-    // If it has items, it's a branch (subject with docs)
-    if (subject.items != null && subject.items!.isNotEmpty) {
+    // Get icon based on title or type
+    IconData icon = _getNodeIcon(node.title);
+
+    if (hasChildren) {
+      // Branch with children - use ExpansionTile
       return ExpansionTile(
-        leading: const Icon(Icons.book),
-        title: Text(subject.title),
-        children: subject.items!.map((item) {
-          return _buildDocTile(context, item, manifest);
-        }).toList(),
+        leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
+        title: Text(
+          node.title,
+          style: TextStyle(
+            fontWeight: depth == 0 ? FontWeight.bold : FontWeight.w500,
+          ),
+        ),
+        initiallyExpanded: depth == 0, // Expand semesters by default
+        children: node.items
+            .map((child) =>
+                _buildSidebarNode(context, child, manifest, depth + 1))
+            .toList(),
+      );
+    } else if (hasDocId) {
+      // Leaf node - open doc
+      final doc = manifest.getDoc(node.docId!);
+      return ListTile(
+        leading: Icon(icon, size: 20),
+        title: Text(node.title),
+        subtitle: doc != null
+            ? Text(doc.type, style: const TextStyle(fontSize: 12))
+            : null,
+        contentPadding: EdgeInsets.only(left: 16.0 + (depth * 16.0), right: 16),
+        onTap: () => _openDoc(context, node.docId!),
+      );
+    } else {
+      // Empty node (shouldn't happen, but handle gracefully)
+      return ListTile(
+        leading: Icon(icon),
+        title: Text(node.title),
+        contentPadding: EdgeInsets.only(left: 16.0 + (depth * 16.0), right: 16),
       );
     }
-
-    // If it has a docId, it's a leaf
-    if (subject.docId != null) {
-      return _buildDocLeaf(context, subject, manifest);
-    }
-
-    // Empty branch
-    return ListTile(
-      leading: const Icon(Icons.folder_open),
-      title: Text(subject.title),
-    );
   }
 
-  Widget _buildDocTile(
+  /// Build navigation from legacy tree (backward compatibility)
+  Widget _buildLegacyTree(
     BuildContext context,
-    TreeNode item,
+    List<TreeNode> nodes,
     ContentManifest manifest,
   ) {
-    if (item.docId != null) {
-      return _buildDocLeaf(context, item, manifest);
+    if (nodes.isEmpty) {
+      // Build from docs map if no tree
+      return _buildFromDocs(context, manifest);
     }
 
-    // Nested branch
-    if (item.items != null && item.items!.isNotEmpty) {
-      return ExpansionTile(
-        leading: const Icon(Icons.folder_outlined),
-        title: Text(item.title),
-        children: item.items!.map((child) {
-          return _buildDocTile(context, child, manifest);
-        }).toList(),
-      );
-    }
-
-    return ListTile(title: Text(item.title));
-  }
-
-  Widget _buildDocLeaf(
-    BuildContext context,
-    TreeNode item,
-    ContentManifest manifest,
-  ) {
-    final doc = item.docId != null ? manifest.getDoc(item.docId!) : null;
-    final icon = _getTypeIcon(item.type ?? doc?.type);
-
-    return ListTile(
-      leading: Icon(icon, size: 20),
-      title: Text(item.title),
-      contentPadding: const EdgeInsets.only(left: 32, right: 16),
-      onTap: () {
-        if (item.docId != null) {
-          context.push('/reader', extra: {'docId': item.docId});
-        }
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      itemCount: nodes.length,
+      itemBuilder: (context, index) {
+        return _buildLegacyNode(context, nodes[index], manifest, 0);
       },
     );
   }
 
-  IconData _getTypeIcon(String? type) {
-    switch (type) {
-      case 'index':
-        return Icons.home;
-      case 'handout':
-        return Icons.description;
-      case 'notes':
-        return Icons.article;
-      case 'pyq':
-        return Icons.quiz;
-      case 'assignments':
-        return Icons.assignment;
-      case 'intro':
-        return Icons.info;
-      default:
-        return Icons.article_outlined;
+  Widget _buildLegacyNode(
+    BuildContext context,
+    TreeNode node,
+    ContentManifest manifest,
+    int depth,
+  ) {
+    final hasChildren = node.items.isNotEmpty;
+    final hasDocId = node.docId != null;
+    IconData icon = _getNodeIcon(node.title);
+
+    if (hasChildren) {
+      return ExpansionTile(
+        leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
+        title: Text(
+          node.title,
+          style: TextStyle(
+            fontWeight: depth == 0 ? FontWeight.bold : FontWeight.w500,
+          ),
+        ),
+        initiallyExpanded: depth == 0,
+        children: node.items
+            .map((child) =>
+                _buildLegacyNode(context, child, manifest, depth + 1))
+            .toList(),
+      );
+    } else if (hasDocId) {
+      return ListTile(
+        leading: Icon(icon, size: 20),
+        title: Text(node.title),
+        contentPadding: EdgeInsets.only(left: 16.0 + (depth * 16.0), right: 16),
+        onTap: () => _openDoc(context, node.docId!),
+      );
+    } else {
+      return ListTile(
+        leading: Icon(icon),
+        title: Text(node.title),
+        contentPadding: EdgeInsets.only(left: 16.0 + (depth * 16.0), right: 16),
+      );
     }
+  }
+
+  /// Fallback: Build from docs map (for old manifests without tree)
+  Widget _buildFromDocs(BuildContext context, ContentManifest manifest) {
+    final docs = manifest.docs.entries.toList()
+      ..sort((a, b) => a.key.compareTo(b.key));
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: docs.length,
+      itemBuilder: (context, index) {
+        final entry = docs[index];
+        return ListTile(
+          title: Text(entry.value.title),
+          subtitle: Text(entry.key),
+          onTap: () => _openDoc(context, entry.key),
+        );
+      },
+    );
+  }
+
+  IconData _getNodeIcon(String title) {
+    final lower = title.toLowerCase();
+    if (lower.contains('semester')) return Icons.school;
+    if (lower.contains('handout')) return Icons.description;
+    if (lower.contains('notes')) return Icons.note;
+    if (lower.contains('pyq')) return Icons.quiz;
+    if (lower.contains('assignment')) return Icons.assignment;
+    if (lower.contains('project')) return Icons.folder_special;
+    if (lower.contains('programming')) return Icons.code;
+    if (lower.contains('math') || lower.contains('discrete'))
+      return Icons.calculate;
+    if (lower.contains('english')) return Icons.language;
+    if (lower.contains('dld') || lower.contains('digital')) return Icons.memory;
+    if (lower.contains('cfoa') || lower.contains('computer'))
+      return Icons.computer;
+    return Icons.article;
+  }
+
+  void _openDoc(BuildContext context, String docId) {
+    context.push('/reader', extra: {'docId': docId});
   }
 }

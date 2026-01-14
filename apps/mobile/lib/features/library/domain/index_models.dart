@@ -1,7 +1,12 @@
-/// Content pack manifest models for offline doc storage.
+/// Content pack manifest models for offline doc storage (v2.1).
 ///
 /// These models represent the structure of index.json manifest
 /// that is distributed with the content packs via GitHub Releases.
+///
+/// NEW in v2.1:
+/// - sidebarTree: minimal sidebar navigation (essentials only)
+/// - indexGraph: deep navigation (index → children)
+/// - relations: prev/next/up links for unit docs
 
 /// The main manifest model loaded from index.json
 class ContentManifest {
@@ -9,16 +14,40 @@ class ContentManifest {
     required this.packVersion,
     required this.generatedAt,
     required this.docs,
-    required this.tree,
+    this.sidebarTree = const [],
+    this.indexGraph = const {},
+    this.relations,
+    this.backlinksGraph = const {},
+    // Legacy field (deprecated)
+    this.tree = const [],
   });
 
   final String packVersion;
   final String generatedAt;
   final Map<String, DocEntry> docs;
+
+  /// NEW v2.1: Minimal sidebar navigation (essentials only)
+  final List<SidebarNode> sidebarTree;
+
+  /// NEW v2.1: Deep navigation structure (indexDocId → [childDocIds])
+  final Map<String, List<String>> indexGraph;
+
+  /// NEW v2.1: Relations (prev/next/up for unit docs)
+  final DocRelations? relations;
+
+  /// NEW v2.1: Manual backlinks (optional curated links)
+  final Map<String, List<Backlink>> backlinksGraph;
+
+  /// Legacy tree field (deprecated, use sidebarTree)
+  @Deprecated('Use sidebarTree instead')
   final List<TreeNode> tree;
 
   factory ContentManifest.fromJson(Map<String, dynamic> json) {
     final docsJson = json['docs'] as Map<String, dynamic>? ?? {};
+    final sidebarTreeJson = json['sidebarTree'] as List<dynamic>? ?? [];
+    final indexGraphJson = json['indexGraph'] as Map<String, dynamic>? ?? {};
+    final relationsJson = json['relations'] as Map<String, dynamic>?;
+    final backlinksJson = json['backlinksGraph'] as Map<String, dynamic>? ?? {};
     final treeJson = json['tree'] as List<dynamic>? ?? [];
 
     return ContentManifest(
@@ -28,6 +57,25 @@ class ContentManifest {
         (key, value) => MapEntry(
           key,
           DocEntry.fromJson(value as Map<String, dynamic>),
+        ),
+      ),
+      sidebarTree: sidebarTreeJson
+          .map((e) => SidebarNode.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      indexGraph: indexGraphJson.map(
+        (key, value) => MapEntry(
+          key,
+          (value as List<dynamic>).map((e) => e.toString()).toList(),
+        ),
+      ),
+      relations:
+          relationsJson != null ? DocRelations.fromJson(relationsJson) : null,
+      backlinksGraph: backlinksJson.map(
+        (key, value) => MapEntry(
+          key,
+          (value as List<dynamic>)
+              .map((e) => Backlink.fromJson(e as Map<String, dynamic>))
+              .toList(),
         ),
       ),
       tree: treeJson
@@ -40,7 +88,12 @@ class ContentManifest {
         'packVersion': packVersion,
         'generatedAt': generatedAt,
         'docs': docs.map((key, value) => MapEntry(key, value.toJson())),
-        'tree': tree.map((e) => e.toJson()).toList(),
+        'sidebarTree': sidebarTree.map((e) => e.toJson()).toList(),
+        'indexGraph': indexGraph,
+        if (relations != null) 'relations': relations!.toJson(),
+        'backlinksGraph': backlinksGraph.map(
+          (key, value) => MapEntry(key, value.map((e) => e.toJson()).toList()),
+        ),
       };
 
   /// Get a doc entry by its docId
@@ -48,52 +101,199 @@ class ContentManifest {
 
   /// Check if a docId exists in this manifest
   bool hasDoc(String docId) => docs.containsKey(docId);
+
+  /// Get children of an index doc from indexGraph
+  List<String> getIndexChildren(String indexDocId) =>
+      indexGraph[indexDocId] ?? [];
+
+  /// Get navigation relations for a doc
+  NextPrevUp? getRelations(String docId) => relations?.nextPrev[docId];
+
+  /// Get backlinks for a doc
+  List<Backlink> getBacklinks(String docId) => backlinksGraph[docId] ?? [];
+
+  /// Check if this manifest has the new v2.1 format
+  bool get hasNewFormat => sidebarTree.isNotEmpty || indexGraph.isNotEmpty;
 }
 
 /// A single document entry in the docs map
 class DocEntry {
   DocEntry({
     required this.title,
-    required this.semester,
-    required this.subject,
     required this.type,
-    required this.order,
     required this.html,
+    this.semester = 0,
+    this.subject,
+    this.order = 0,
+    this.unit,
   });
 
   final String title;
-  final int semester;
-  final String subject;
-  final String type;
-  final int order;
+  final String type; // 'index', 'unit', 'doc', 'handout', 'notes', 'pyq'
   final String html; // relative path: "docs/<docId>.html"
+  final int semester;
+  final String? subject;
+  final int order;
+  final UnitInfo? unit; // For unit docs
 
   factory DocEntry.fromJson(Map<String, dynamic> json) {
     return DocEntry(
       title: (json['title'] ?? '').toString(),
+      type: (json['type'] ?? 'doc').toString(),
+      html: (json['html'] ?? '').toString(),
       semester: (json['semester'] ?? 0) is int
           ? json['semester'] as int
           : int.tryParse((json['semester'] ?? '0').toString()) ?? 0,
-      subject: (json['subject'] ?? '').toString(),
-      type: (json['type'] ?? '').toString(),
+      subject: json['subject']?.toString(),
       order: (json['order'] ?? 0) is int
           ? json['order'] as int
           : int.tryParse((json['order'] ?? '0').toString()) ?? 0,
-      html: (json['html'] ?? '').toString(),
+      unit: json['unit'] != null
+          ? UnitInfo.fromJson(json['unit'] as Map<String, dynamic>)
+          : null,
     );
   }
 
   Map<String, dynamic> toJson() => {
         'title': title,
-        'semester': semester,
-        'subject': subject,
         'type': type,
-        'order': order,
         'html': html,
+        'semester': semester,
+        if (subject != null) 'subject': subject,
+        'order': order,
+        if (unit != null) 'unit': unit!.toJson(),
       };
 }
 
-/// A node in the navigation tree (semester, subject, or doc reference)
+/// Unit info for unit docs
+class UnitInfo {
+  UnitInfo({required this.course, required this.number});
+
+  final String course;
+  final int number;
+
+  factory UnitInfo.fromJson(Map<String, dynamic> json) => UnitInfo(
+        course: (json['course'] ?? '').toString(),
+        number: (json['number'] ?? 0) is int
+            ? json['number'] as int
+            : int.tryParse((json['number'] ?? '0').toString()) ?? 0,
+      );
+
+  Map<String, dynamic> toJson() => {'course': course, 'number': number};
+}
+
+/// A node in the sidebar tree (v2.1)
+class SidebarNode {
+  SidebarNode({
+    required this.id,
+    required this.title,
+    this.docId,
+    this.items = const [],
+  });
+
+  final String id;
+  final String title;
+  final String? docId; // If present, tapping opens this doc
+  final List<SidebarNode> items; // Child nodes
+
+  /// Whether this is a leaf node (has docId)
+  bool get isLeaf => docId != null && items.isEmpty;
+
+  /// Whether this is a branch node (has children)
+  bool get isBranch => items.isNotEmpty;
+
+  factory SidebarNode.fromJson(Map<String, dynamic> json) {
+    final itemsJson = json['items'] as List<dynamic>? ?? [];
+    return SidebarNode(
+      id: (json['id'] ?? '').toString(),
+      title: (json['title'] ?? '').toString(),
+      docId: json['docId']?.toString(),
+      items: itemsJson
+          .map((e) => SidebarNode.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{
+      'id': id,
+      'title': title,
+    };
+    if (docId != null) map['docId'] = docId;
+    if (items.isNotEmpty) {
+      map['items'] = items.map((e) => e.toJson()).toList();
+    }
+    return map;
+  }
+}
+
+/// Relations container (v2.1)
+class DocRelations {
+  DocRelations({required this.nextPrev});
+
+  final Map<String, NextPrevUp> nextPrev;
+
+  factory DocRelations.fromJson(Map<String, dynamic> json) {
+    final nextPrevJson = json['nextPrev'] as Map<String, dynamic>? ?? {};
+    return DocRelations(
+      nextPrev: nextPrevJson.map(
+        (key, value) => MapEntry(
+          key,
+          NextPrevUp.fromJson(value as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'nextPrev': nextPrev.map((key, value) => MapEntry(key, value.toJson())),
+      };
+}
+
+/// Next/Prev/Up relations for a doc
+class NextPrevUp {
+  NextPrevUp({this.prev, this.next, this.up});
+
+  final String? prev;
+  final String? next;
+  final String? up;
+
+  factory NextPrevUp.fromJson(Map<String, dynamic> json) => NextPrevUp(
+        prev: json['prev']?.toString(),
+        next: json['next']?.toString(),
+        up: json['up']?.toString(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        if (prev != null) 'prev': prev,
+        if (next != null) 'next': next,
+        if (up != null) 'up': up,
+      };
+}
+
+/// A backlink entry (v2.1)
+class Backlink {
+  Backlink({required this.label, required this.targetDocId});
+
+  final String label;
+  final String targetDocId;
+
+  factory Backlink.fromJson(Map<String, dynamic> json) => Backlink(
+        label: (json['label'] ?? '').toString(),
+        targetDocId: (json['targetDocId'] ?? '').toString(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'label': label,
+        'targetDocId': targetDocId,
+      };
+}
+
+// ============================================================================
+// Legacy models (kept for backward compatibility)
+// ============================================================================
+
+/// Legacy tree node (use SidebarNode for new code)
 class TreeNode {
   TreeNode({
     required this.id,
@@ -105,19 +305,15 @@ class TreeNode {
 
   final String id;
   final String title;
-  final String? docId; // If present, this is a leaf node pointing to a doc
-  final String? type; // For leaf nodes: handout, notes, pyq, etc.
-  final List<TreeNode> items; // Child nodes (empty for leaf nodes)
+  final String? docId;
+  final String? type;
+  final List<TreeNode> items;
 
-  /// Whether this is a leaf node (references a doc)
   bool get isLeaf => docId != null;
-
-  /// Whether this is a branch node (has children)
   bool get isBranch => items.isNotEmpty;
 
   factory TreeNode.fromJson(Map<String, dynamic> json) {
     final itemsJson = json['items'] as List<dynamic>? ?? [];
-
     return TreeNode(
       id: (json['id'] ?? json['docId'] ?? '').toString(),
       title: (json['title'] ?? '').toString(),
@@ -130,10 +326,7 @@ class TreeNode {
   }
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{
-      'id': id,
-      'title': title,
-    };
+    final map = <String, dynamic>{'id': id, 'title': title};
     if (docId != null) map['docId'] = docId;
     if (type != null) map['type'] = type;
     if (items.isNotEmpty) {
@@ -142,10 +335,6 @@ class TreeNode {
     return map;
   }
 }
-
-// ============================================================================
-// Legacy models (kept for backward compatibility during migration)
-// ============================================================================
 
 @Deprecated('Use ContentManifest instead')
 class AppIndex {
@@ -171,7 +360,7 @@ class AppIndex {
   }
 }
 
-@Deprecated('Use TreeNode instead')
+@Deprecated('Use SidebarNode instead')
 class Semester {
   Semester({required this.name, required this.subjects});
   final String name;
@@ -188,7 +377,7 @@ class Semester {
   }
 }
 
-@Deprecated('Use TreeNode instead')
+@Deprecated('Use SidebarNode instead')
 class Subject {
   Subject({required this.name, required this.sections});
   final String name;
@@ -205,7 +394,7 @@ class Subject {
   }
 }
 
-@Deprecated('Use TreeNode instead')
+@Deprecated('Use SidebarNode instead')
 class Section {
   Section({required this.name, required this.items});
   final String name;

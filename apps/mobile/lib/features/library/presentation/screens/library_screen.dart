@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../domain/index_models.dart';
 import '../../../../core/providers/pack_providers.dart';
@@ -188,6 +189,11 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
               icon: const Icon(Icons.home),
               onPressed: () => _loadDoc('homepage'),
               tooltip: 'Home',
+            ),
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () => context.push('/settings'),
+              tooltip: 'Settings',
             ),
           ],
         ),

@@ -118,7 +118,48 @@ cd apps/mobile && flutter analyze lib/
 
 ---
 
+## UI Sanity Checklist (Docusaurus)
+
+Before pushing to production:
+
+### SVG/Icon Sizing
+
+```css
+/* Prevent huge SVG icons */
+.theme-admonition .admonitionIcon svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+.theme-admonition .admonitionIcon {
+  font-size: 18px;
+  line-height: 1;
+}
+```
+
+### Visual Checks
+
+- [ ] Admonitions (tip/note/info/warning/danger)
+- [ ] Mermaid diagrams
+- [ ] Code blocks
+- [ ] PDF embeds
+- [ ] Icons and spacing at mobile width (375px)
+- [ ] Light mode
+- [ ] Dark mode (icon visibility, background contrast, borders)
+
+### Stable Selectors
+
+Use stable selectors (not hashed):
+- `.theme-admonition`
+- `.admonitionIcon`
+- `.alert--info` / `.alert--tip` / `.alert--warning`
+
+**Avoid:** `.admonitionIcon_Rf37` (changes between builds)
+
+---
+
 ## Version History
+
 - **v2026.01.15:** UX Overhaul - Homepage + Drawer navigation
 - **v2026.01.14:** Automation Level 2 - Hub generation
 - **v2026.01.13:** Initial content pack system

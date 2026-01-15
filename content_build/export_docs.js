@@ -272,6 +272,34 @@ function extractAndCleanHtml(html, routeToDocId, docId = null, relations = null,
         img.replaceWith(placeholder);
     });
     
+    // Remove videos and iframes (reduce pack size)
+    article.querySelectorAll('video, iframe').forEach(el => {
+        const placeholder = doc.createElement('span');
+        placeholder.textContent = '[Media content available online]';
+        placeholder.style.cssText = 'display: block; padding: 20px; background: #e3f2fd; text-align: center; color: #1976d2; border-radius: 8px; margin: 1em 0;';
+        el.replaceWith(placeholder);
+    });
+    
+    // Remove large inline SVGs (keep small icons)
+    article.querySelectorAll('svg').forEach(svg => {
+        const html = svg.outerHTML || '';
+        if (html.length > 5000) {
+            svg.remove();
+        }
+    });
+    
+    // Remove base64 images (large size)
+    article.querySelectorAll('img[src^="data:"]').forEach(img => {
+        const src = img.getAttribute('src') || '';
+        if (src.length > 10000) {
+            const alt = img.getAttribute('alt') || 'Image';
+            const placeholder = doc.createElement('span');
+            placeholder.textContent = `[${alt}]`;
+            placeholder.style.cssText = 'display: block; padding: 10px; background: #f5f5f5; text-align: center; font-size: 0.9em;';
+            img.replaceWith(placeholder);
+        }
+    });
+    
     // Remove script tags
     article.querySelectorAll('script').forEach(el => el.remove());
     
@@ -351,6 +379,9 @@ function buildRouteLookup(registry) {
     const routeToDocId = new Map();
     
     for (const [docId, meta] of Object.entries(registry)) {
+        // Skip entries without source (e.g., generated hub pages)
+        if (!meta.source) continue;
+        
         const sourcePath = meta.source
             .replace(/^website[\\/]docs[\\/]/, '/docs/')
             .replace(/[\\/]index\.mdx$/, '')
@@ -551,7 +582,8 @@ async function exportDocs() {
  */
 function extractDocMeta(docId, source) {
     const lowerDocId = docId.toLowerCase();
-    const lowerSource = source.toLowerCase().replace(/\\/g, '/');
+    // Handle undefined source (e.g., for generated hub entries)
+    const lowerSource = (source || '').toLowerCase().replace(/\\/g, '/');
     
     // Extract semester
     let semester = 0;
@@ -645,7 +677,7 @@ function isSemesterIndex(docId, source) {
 }
 
 function extractSubjectName(docId, source) {
-    const pathMatch = source.replace(/\\/g, '/').match(/semester[_\s]?\d+\/([^/]+)/i);
+    const pathMatch = (source || '').replace(/\\/g, '/').match(/semester[_\s]?\d+\/([^/]+)/i);
     if (pathMatch) {
         return pathMatch[1].replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     }

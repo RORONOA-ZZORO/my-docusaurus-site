@@ -28,3 +28,61 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* Recommender System Styles */
+.recommender-card {
+  max-width: 600px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.choices-container {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.choice-button {
+  text-align: left;
+  padding: 16px;
+  border: 2px solid var(--ifm-color-secondary-light);
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--ifm-font-color-base);
+  width: 100%;
+}
+
+.choice-button:hover {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lighter);
+  transform: translateX(5px);
+}
+
+.choice-button:active {
+  transform: translateX(2px);
+}
+
+/* Custom Scrollbar for Choices */
+.choices-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.choices-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.choices-container::-webkit-scrollbar-thumb {
+  background: var(--ifm-color-secondary-lighter);
+  border-radius: 10px;
+}
+
+.choices-container::-webkit-scrollbar-thumb:hover {
+  background: var(--ifm-color-secondary-light);
+}

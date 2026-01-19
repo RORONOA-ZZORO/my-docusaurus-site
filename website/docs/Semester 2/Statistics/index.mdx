@@ -2,7 +2,7 @@
 title: Statistics
 ---
 
-import Link from '@docusaurus/Link'
+import Link from "@docusaurus/Link";
 
 # Statistics
 
@@ -10,28 +10,124 @@ Welcome to Statistics! Below are all the learning materials and resources for th
 
 ## 📚 Course Materials
 
-<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', marginTop: '1.5rem' }}>
-  <div style={{ padding: '1rem', border: '1px solid #ddd', borderRadius: '8px' }}>
-    <h3>📘 Handout</h3>
-    <p>Official course handout and guidelines</p>
-    <Link to="./Handout" className="button button--primary button--sm">View</Link>
+<div className="row">
+  <div className="col col--6 margin-bottom--lg">
+    <div className="card shadow--md h-100 resource-card card--primary">
+      <div className="card__header">
+        <h3 style={{margin: 0, display: 'flex', alignItems: 'center', gap: '12px', fontSize: '1.25rem'}}>
+          <span style={{fontSize: '1.5rem'}}>📘</span> Handout
+        </h3>
+      </div>
+      <div className="card__body" style={{padding: '1.5rem'}}>
+        <p style={{marginBottom: 0, color: 'var(--ifm-color-content-secondary)', fontSize: '1rem'}}>
+          Official course handout, syllabus, and guidelines.
+        </p>
+      </div>
+      <div className="card__footer" style={{padding: '1.5rem', paddingTop: 0, border: 'none'}}>
+        <Link to="./Handout" className="button button--primary button--block shadow--sm">View Handout</Link>
+      </div>
+    </div>
   </div>
 
-  <div style={{ padding: '1rem', border: '1px solid #ddd', borderRadius: '8px' }}>
-    <h3>📝 Notes</h3>
-    <p>Lecture notes and study materials</p>
-    <Link to="./Notes/" className="button button--primary button--sm">View</Link>
-  </div>
+{" "}
 
-  <div style={{ padding: '1rem', border: '1px solid #ddd', borderRadius: '8px' }}>
-    <h3>✏️ Assignments</h3>
-    <p>Homework and assignment problems</p>
-    <Link to="./Assignments" className="button button--primary button--sm">View</Link>
+<div className="col col--6 margin-bottom--lg">
+  <div className="card shadow--md h-100 resource-card card--success">
+    <div className="card__header">
+      <h3
+        style={{
+          margin: 0,
+          display: "flex",
+          alignItems: "center",
+          gap: "12px",
+          fontSize: "1.25rem",
+        }}
+      >
+        <span style={{ fontSize: "1.5rem" }}>📝</span> Notes
+      </h3>
+    </div>
+    <div className="card__body" style={{ padding: "1.5rem" }}>
+      <p
+        style={{
+          marginBottom: 0,
+          color: "var(--ifm-color-content-secondary)",
+          fontSize: "1rem",
+        }}
+      >
+        Complete lecture notes and unit-wise study materials.
+      </p>
+    </div>
+    <div
+      className="card__footer"
+      style={{ padding: "1.5rem", paddingTop: 0, border: "none" }}
+    >
+      <Link
+        to="./Notes"
+        className="button button--success button--block shadow--sm"
+      >
+        View Notes
+      </Link>
+    </div>
   </div>
+</div>
 
-  <div style={{ padding: '1rem', border: '1px solid #ddd', borderRadius: '8px' }}>
-    <h3>🎯 Miscellaneous Activities</h3>
-    <p>Projects, quizzes, and activities</p>
-    <Link to="./MiscActivities" className="button button--primary button--sm">View</Link>
+{" "}
+
+<div className="col col--6 margin-bottom--lg">
+  <div className="card shadow--md h-100 resource-card card--warning">
+    <div className="card__header">
+      <h3
+        style={{
+          margin: 0,
+          display: "flex",
+          alignItems: "center",
+          gap: "12px",
+          fontSize: "1.25rem",
+        }}
+      >
+        <span style={{ fontSize: "1.5rem" }}>✏️</span> Assignments
+      </h3>
+    </div>
+    <div className="card__body" style={{ padding: "1.5rem" }}>
+      <p
+        style={{
+          marginBottom: 0,
+          color: "var(--ifm-color-content-secondary)",
+          fontSize: "1rem",
+        }}
+      >
+        Homework assignments and submission details.
+      </p>
+    </div>
+    <div
+      className="card__footer"
+      style={{ padding: "1.5rem", paddingTop: 0, border: "none" }}
+    >
+      <Link
+        to="./Assignments"
+        className="button button--warning button--block shadow--sm"
+      >
+        View Assignments
+      </Link>
+    </div>
+  </div>
+</div>
+
+  <div className="col col--6 margin-bottom--lg">
+    <div className="card shadow--md h-100 resource-card card--info">
+      <div className="card__header">
+        <h3 style={{margin: 0, display: 'flex', alignItems: 'center', gap: '12px', fontSize: '1.25rem'}}>
+          <span style={{fontSize: '1.5rem'}}>💡</span> Practice
+        </h3>
+      </div>
+      <div className="card__body" style={{padding: '1.5rem'}}>
+        <p style={{marginBottom: 0, color: 'var(--ifm-color-content-secondary)', fontSize: '1rem'}}>
+          Previous year questions (PYQs) and practice sets.
+        </p>
+      </div>
+      <div className="card__footer" style={{padding: '1.5rem', paddingTop: 0, border: 'none'}}>
+        <Link to="./Practice-Questions" className="button button--info button--block shadow--sm">View Practice</Link>
+      </div>
+    </div>
   </div>
 </div>

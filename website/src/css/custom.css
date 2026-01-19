@@ -15,6 +15,29 @@
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  /* --- SEMANTIC COLOR LAYER --- */
+  
+  /* Defaults (Light Mode) */
+  --card-bg-primary: var(--ifm-color-primary-lightest);
+  --card-bg-success: var(--ifm-color-success-lightest);
+  --card-bg-warning: var(--ifm-color-warning-lightest);
+  --card-bg-info: var(--ifm-color-info-lightest);
+
+  --card-text-primary: var(--ifm-color-primary-darker);
+  --card-text-success: var(--ifm-color-success-darker);
+  --card-text-warning: var(--ifm-color-warning-darker);
+  --card-text-info: var(--ifm-color-info-darker);
+
+  --card-border-primary: var(--ifm-color-emphasis-100);
+  --card-border-success: var(--ifm-color-emphasis-100);
+  --card-border-warning: var(--ifm-color-emphasis-100);
+  --card-border-info: var(--ifm-color-emphasis-100);
+
+  --card-glow-primary: none;
+  --card-glow-success: none;
+  --card-glow-warning: none;
+  --card-glow-info: none;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -27,4 +50,96 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+
+  /* --- DARK MODE OVERRIDES (Less Poppy, Premium Glow) --- */
+  /* Instead of full colored backgrounds, use dark backgrounds with colored borders and text */
+  
+  --card-bg-primary: rgba(37, 194, 160, 0.1); /* Subtle tint */
+  --card-bg-success: rgba(0, 164, 0, 0.1);
+  --card-bg-warning: rgba(255, 186, 0, 0.1);
+  --card-bg-info: rgba(84, 199, 236, 0.1);
+
+  --card-text-primary: var(--ifm-color-primary-lightest);
+  --card-text-success: var(--ifm-color-success-lightest);
+  --card-text-warning: var(--ifm-color-warning-lightest);
+  --card-text-info: var(--ifm-color-info-lightest);
+
+  --card-border-primary: var(--ifm-color-primary);
+  --card-border-success: var(--ifm-color-success);
+  --card-border-warning: var(--ifm-color-warning);
+  --card-border-info: var(--ifm-color-info);
+
+  /* Subtle inner glow for premium feel */
+  --card-glow-primary: 0 0 10px rgba(37, 194, 160, 0.2);
+  --card-glow-success: 0 0 10px rgba(0, 164, 0, 0.2);
+  --card-glow-warning: 0 0 10px rgba(255, 186, 0, 0.2);
+  --card-glow-info: 0 0 10px rgba(84, 199, 236, 0.2);
+}
+
+/* --- RESOURCE CARD CLASSES --- */
+/* Usage: <div className="card resource-card card--primary"> ... </div> */
+
+.resource-card {
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.resource-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* Primary Variant (Handout) */
+.card--primary {
+  border-color: var(--card-border-primary);
+  box-shadow: var(--card-glow-primary);
+}
+.card--primary .card__header {
+  background: var(--card-bg-primary);
+  border-bottom: 1px solid var(--card-border-primary);
+}
+.card--primary h3 {
+  color: var(--card-text-primary);
+}
+
+/* Success Variant (Notes) */
+.card--success {
+  border-color: var(--card-border-success);
+  box-shadow: var(--card-glow-success);
+}
+.card--success .card__header {
+  background: var(--card-bg-success);
+  border-bottom: 1px solid var(--card-border-success);
+}
+.card--success h3 {
+  color: var(--card-text-success);
+}
+
+/* Warning Variant (Assignments) */
+.card--warning {
+  border-color: var(--card-border-warning);
+  box-shadow: var(--card-glow-warning);
+}
+.card--warning .card__header {
+  background: var(--card-bg-warning);
+  border-bottom: 1px solid var(--card-border-warning);
+}
+.card--warning h3 {
+  color: var(--card-text-warning);
+}
+
+/* Info Variant (Practice) */
+.card--info {
+  border-color: var(--card-border-info);
+  box-shadow: var(--card-glow-info);
+}
+.card--info .card__header {
+  background: var(--card-bg-info);
+  border-bottom: 1px solid var(--card-border-info);
+}
+.card--info h3 {
+  color: var(--card-text-info);
 }

@@ -1,0 +1,310 @@
+/* Modern Quiz Component Styles */
+
+.quizCard {
+  background: var(--ifm-background-surface-color);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  overflow: hidden;
+  margin: 2rem 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quizCard:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Header Section */
+.quizHeader {
+  background: linear-gradient(135deg, var(--ifm-color-primary) 0%, var(--ifm-color-primary-dark) 100%);
+  padding: 1.5rem 2rem;
+  color: white;
+  position: relative;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.progressText {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+}
+
+.progressBarBg {
+  background: rgba(0, 0, 0, 0.2);
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  background: white;
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Questions List */
+.questionsList {
+  padding: 2rem;
+}
+
+.questionBlock {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px dashed var(--ifm-color-emphasis-200);
+}
+
+.questionBlock:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.questionText {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+  display: flex;
+  gap: 1rem;
+}
+
+.questionNumber {
+  background: var(--ifm-color-primary-lightest);
+  color: var(--ifm-color-primary);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Options Grid */
+.optionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.optionBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 2px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-color);
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  color: var(--ifm-font-color-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.optionBtn:hover:not(:disabled) {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lightest);
+  transform: translateY(-2px);
+}
+
+.optionMarker {
+  background: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-700);
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.optionBtn:hover .optionMarker {
+  background: var(--ifm-color-primary);
+  color: white;
+}
+
+/* Selected / Correct / Incorrect States */
+.selected {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lightest);
+  box-shadow: 0 0 0 2px var(--ifm-color-primary-lightest);
+}
+
+.selected .optionMarker {
+  background: var(--ifm-color-primary);
+  color: white;
+}
+
+.correct {
+  border-color: #22c55e !important;
+  background: #f0fdf4 !important;
+  color: #15803d !important;
+}
+
+.correct .optionMarker {
+  background: #22c55e;
+  color: white;
+}
+
+.incorrect {
+  border-color: #ef4444 !important;
+  background: #fef2f2 !important;
+  color: #b91c1c !important;
+  opacity: 0.8;
+}
+
+.incorrect .optionMarker {
+  background: #ef4444;
+  color: white;
+}
+
+.dimmed {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.icon {
+  margin-left: auto;
+  font-size: 1.2rem;
+}
+
+[data-theme='dark'] .correct {
+  background: rgba(34, 197, 94, 0.1) !important;
+  color: #4ade80 !important;
+}
+
+[data-theme='dark'] .incorrect {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #f87171 !important;
+}
+
+/* Footer / Actions */
+.footer {
+  padding: 1.5rem 2rem;
+  background: var(--ifm-color-emphasis-100);
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  display: flex;
+  justify-content: center;
+}
+
+.actionBtn {
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, var(--ifm-color-primary) 0%, var(--ifm-color-primary-dark) 100%);
+  color: white;
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(var(--ifm-color-primary-rgb), 0.3);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.resetBtn {
+  background: white;
+  color: var(--ifm-color-gray-800);
+  border: 1px solid var(--ifm-color-gray-300);
+}
+
+.resetBtn:hover {
+  background: var(--ifm-color-gray-100);
+  transform: translateY(-2px);
+}
+
+/* Results */
+.resultContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  animation: fadeIn 0.5s ease;
+  text-align: center;
+  width: 100%;
+}
+
+.scoreCircle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+  margin-bottom: 0.5rem;
+}
+
+.scoreValue {
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+}
+
+.resultText h4 {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem;
+  color: var(--ifm-color-emphasis-900);
+}
+
+.resultText p {
+  margin: 0;
+  color: var(--ifm-color-emphasis-700);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .quizHeader, .questionsList, .footer {
+    padding: 1.5rem;
+  }
+}

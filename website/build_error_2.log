@@ -1,0 +1,78 @@
+
+> my-docusaurus-site@0.0.0 build
+> docusaurus build
+
+[INFO] [en] Creating an optimized production build...
+[WARNING] Error: Failed to retrieve the git history for file "C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\news\changelog.mdx" because the file is not tracked by git.
+[WARNING] Error: Failed to retrieve the git history for file "C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\news\index.mdx" because the file is not tracked by git.
+[WARNING] Cannot infer the update date for some files, as they are not tracked by git.
+[90m[[90mwebpackbar[90m][39m [36mℹ[39m Compiling Client
+[90m[[90mwebpackbar[90m][39m [36mℹ[39m Compiling Server
+[90m[[90mwebpackbar[90m][39m [32m✔[39m Server: Compiled successfully in 3.39s
+[90m[[90mwebpackbar[90m][39m [32m✔[39m Client: Compiled successfully in 4.17s
+
+[ERROR] Error: Unable to build website for locale en.
+    at tryToBuildLocale (C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\core\lib\commands\build\build.js:83:15)
+    at async C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\core\lib\commands\build\build.js:35:9
+    at async mapAsyncSequential (C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\utils\lib\jsUtils.js:21:24)
+    at async Command.build (C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\core\lib\commands\build\build.js:34:5)
+    at async Promise.all (index 0)
+    at async runCLI (C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\core\lib\commands\cli.js:56:5)
+    at async file:///C:/Users/UDAY/Documents/WORK%20media/Projects/my-docusaurus-site/website/node_modules/@docusaurus/core/bin/docusaurus.mjs:44:3 {
+  [cause]: Error: Docusaurus found broken links!
+  
+  Please check the pages of your site in the list below, and make sure you don't reference any path that does not exist.
+  Note: it's possible to ignore broken links with the 'onBrokenLinks' Docusaurus configuration, and let the build pass.
+  
+  It looks like some of the broken links we found appear in many pages of your site.
+  Maybe those broken links appear on all pages through your site layout?
+  We recommend that you check your theme configuration for such links (particularly, theme navbar and footer).
+  Frequent broken links are linking to:
+  - ./Assignments
+  
+  Exhaustive list of all broken links found:
+  - Broken link on source page path = /docs/Semester 1/C-Programming/:
+     -> linking to ./Assignments (resolved as: /docs/Semester%201/C-Programming/Assignments)
+  - Broken link on source page path = /docs/Semester 1/C-Programming/Notes/:
+     -> linking to ./1.introduction-to-C (resolved as: /docs/Semester%201/C-Programming/Notes/1.introduction-to-C)
+     -> linking to ./2.Data-types (resolved as: /docs/Semester%201/C-Programming/Notes/2.Data-types)
+     -> linking to ./3.if-else, else-if, switch and nested ifs (resolved as: /docs/Semester%201/C-Programming/Notes/3.if-else,%20else-if,%20switch%20and%20nested%20ifs)
+     -> linking to ./4.Loops-while-do-while (resolved as: /docs/Semester%201/C-Programming/Notes/4.Loops-while-do-while)
+     -> linking to ./5.Arrays (resolved as: /docs/Semester%201/C-Programming/Notes/5.Arrays)
+  - Broken link on source page path = /docs/Semester 1/CFOA/:
+     -> linking to ./Assignments (resolved as: /docs/Semester%201/CFOA/Assignments)
+  - Broken link on source page path = /docs/Semester 1/Digital-Logic&Design/:
+     -> linking to ./Assignments (resolved as: /docs/Semester%201/Digital-Logic&Design/Assignments)
+  - Broken link on source page path = /docs/Semester 1/English-Communication-Skills/:
+     -> linking to ./Assignments (resolved as: /docs/Semester%201/English-Communication-Skills/Assignments)
+  - Broken link on source page path = /docs/Semester 1/Environmental-Science/:
+     -> linking to ./Assignments (resolved as: /docs/Semester%201/Environmental-Science/Assignments)
+  - Broken link on source page path = /docs/Semester 1/FMCA/:
+     -> linking to ./Assignments (resolved as: /docs/Semester%201/FMCA/Assignments)
+  - Broken link on source page path = /docs/Semester 1/Psychology/:
+     -> linking to ./Assignments (resolved as: /docs/Semester%201/Psychology/Assignments)
+  - Broken link on source page path = /docs/Semester 1/Psychology/Notes/:
+     -> linking to ./1.introduction-to-psychology (resolved as: /docs/Semester%201/Psychology/Notes/1.introduction-to-psychology)
+     -> linking to ./2.Scope-of-psychology (resolved as: /docs/Semester%201/Psychology/Notes/2.Scope-of-psychology)
+     -> linking to ./3.Methods Of Psychology (resolved as: /docs/Semester%201/Psychology/Notes/3.Methods%20Of%20Psychology)
+  - Broken link on source page path = /docs/Semester 1/Shared-Resources/:
+     -> linking to ./Assignments (resolved as: /docs/Semester%201/Shared-Resources/Assignments)
+  - Broken link on source page path = /docs/Semester 1/Understanding-India/:
+     -> linking to ./Assignments (resolved as: /docs/Semester%201/Understanding-India/Assignments)
+  - Broken link on source page path = /docs/Semester 2/extras/:
+     -> linking to ./Handout (resolved as: /docs/Semester%202/extras/Handout)
+     -> linking to ./Assignments (resolved as: /docs/Semester%202/extras/Assignments)
+  
+      at throwError (C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\logger\lib\logger.js:80:11)
+      at reportBrokenLinks (C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\core\lib\server\brokenLinks.js:250:47)
+      at handleBrokenLinks (C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\core\lib\server\brokenLinks.js:282:5)
+      at executeBrokenLinksCheck (C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\core\lib\commands\build\buildLocale.js:119:47)
+      at C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\core\lib\commands\build\buildLocale.js:94:67
+      at Object.async (C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\logger\lib\perfLogger.js:42:47)
+      at buildLocale (C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\core\lib\commands\build\buildLocale.js:94:31)
+      at async runBuildLocaleTask (C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\core\lib\commands\build\build.js:98:5)
+      at async C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\core\lib\commands\build\build.js:79:13
+      at async tryToBuildLocale (C:\Users\UDAY\Documents\WORK media\Projects\my-docusaurus-site\website\node_modules\@docusaurus\core\lib\commands\build\build.js:75:9)
+}
+[INFO] Docusaurus version: 3.9.2
+Node version: v22.19.0

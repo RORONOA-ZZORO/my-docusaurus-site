@@ -3,13 +3,13 @@ id: unit4-loops
 title: "🔄 Unit 4: Concepts of Loops"
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # 🔄 Unit 4: Concepts of Loops
 
 Welcome, coder! 👋  
-In this unit, we’ll explore **loops** — the magic that lets your program repeat tasks automatically, without writing the same code 100 times.  
+In this unit, we’ll explore **loops** — the magic that lets your program repeat tasks automatically, without writing the same code 100 times.
 
 ---
 
@@ -36,11 +36,11 @@ That’s the power of loops! 🚀
 
 ## 🔹 Types of Loops in C
 
-| Loop Type | When to Use | Special Feature |
-|-----------|-------------|-----------------|
-| **while** | Iterations unknown | Condition checked first |
-| **do-while** | Must run at least once | Condition checked last |
-| **for** | Iterations known | All parts in header |
+| Loop Type    | When to Use            | Special Feature         |
+| ------------ | ---------------------- | ----------------------- |
+| **while**    | Iterations unknown     | Condition checked first |
+| **do-while** | Must run at least once | Condition checked last  |
+| **for**      | Iterations known       | All parts in header     |
 
 ---
 
@@ -49,6 +49,7 @@ That’s the power of loops! 🚀
 Repeats while the condition is true.
 
 ### Syntax
+
 ```c
 initialization;
 while (condition) {
@@ -58,6 +59,7 @@ while (condition) {
 ```
 
 ### Example: Print Numbers
+
 ```c
 int i = 1;
 while (i <= 5) {
@@ -67,6 +69,7 @@ while (i <= 5) {
 ```
 
 ### Example: Sum of Natural Numbers
+
 ```c
 int n, sum = 0, i = 1;
 scanf("%d", &n);
@@ -84,6 +87,7 @@ printf("Sum = %d\n", sum);
 Executes **once before checking** the condition.
 
 ### Syntax
+
 ```c
 do {
     // code
@@ -92,6 +96,7 @@ do {
 ```
 
 ### Example
+
 ```c
 int y = 10;
 do {
@@ -100,6 +105,7 @@ do {
 ```
 
 ### Example: Menu Program
+
 <Tabs>
   <TabItem value="menu" label="Menu Code">
 
@@ -129,6 +135,7 @@ That’s why do-while is great for menus.
 Best when the number of iterations is known.
 
 ### Syntax
+
 ```c
 for (init; condition; update) {
     // repeat code
@@ -136,6 +143,7 @@ for (init; condition; update) {
 ```
 
 ### Example: Multiplication Table
+
 ```c
 int num;
 scanf("%d", &num);
@@ -145,6 +153,7 @@ for (int i = 1; i <= 10; i++) {
 ```
 
 ### Example: Factorial
+
 ```c
 int n; unsigned long long fact = 1;
 scanf("%d", &n);
@@ -161,6 +170,7 @@ printf("%d! = %llu\n", n, fact);
 Loops inside loops.
 
 ### Example: Pattern Printing
+
 ```c
 for (int i = 1; i <= 5; i++) {
     for (int j = 1; j <= i; j++) {
@@ -171,6 +181,7 @@ for (int i = 1; i <= 5; i++) {
 ```
 
 Output:
+
 ```
 *
 * *
@@ -184,21 +195,23 @@ Output:
 ## 🎮 Loop Control Statements
 
 ### break
+
 Exits loop immediately.
 
 ```c
 for (int i = 1; i <= 10; i++) {
-    if (i == 5) break;  
+    if (i == 5) break;
     printf("%d ", i);
 }
 ```
 
 ### continue
+
 Skips current iteration.
 
 ```c
 for (int i = 1; i <= 10; i++) {
-    if (i % 3 == 0) continue;  
+    if (i % 3 == 0) continue;
     printf("%d ", i);
 }
 ```
@@ -208,12 +221,14 @@ for (int i = 1; i <= 10; i++) {
 ## ⚡ Loop Variations
 
 ### Infinite Loops
+
 ```c
 while (1) { /* runs forever */ }
 for (;;) { /* also infinite */ }
 ```
 
 ### Flexible for Loop
+
 ```c
 for (int i = 0, j = 10; i < 5; i++, j--) {
     printf("i=%d, j=%d\n", i, j);
@@ -224,10 +239,10 @@ for (int i = 0, j = 10; i < 5; i++, j--) {
 
 ## 🧪 Practice Problems
 
-1. ✅ Prime Checker (using for loop)  
-2. ✅ Fibonacci Series  
-3. ✅ Armstrong Number Checker  
-4. ✅ Pattern Programs (hollow rectangle, diamond, Floyd’s triangle)  
+1. ✅ Prime Checker (using for loop)
+2. ✅ Fibonacci Series
+3. ✅ Armstrong Number Checker
+4. ✅ Pattern Programs (hollow rectangle, diamond, Floyd’s triangle)
 
 ---
 
@@ -235,13 +250,13 @@ for (int i = 0, j = 10; i < 5; i++, j--) {
 
 Which loop **always executes at least once**?
 
-- [ ] while  
-- [x] do-while ✅  
-- [ ] for  
-- [ ] None  
+- [ ] while
+- [x] do-while ✅
+- [ ] for
+- [ ] None
 
 ---
 
 👏 That’s it for Unit 4!  
 You can now **repeat, automate, and generate patterns** like a coding wizard 🧙‍♂️.  
-Next up: **Unit 5 — Arrays** 📦  
+Next up: **Unit 5 — Arrays** 📦

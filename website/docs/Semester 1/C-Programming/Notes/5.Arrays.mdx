@@ -3,8 +3,8 @@ id: unit5-arrays
 title: "🎲 Unit 5: Arrays Made Simple"
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # 🎲 Unit 5: Arrays Made Simple
 
@@ -18,7 +18,7 @@ Instead of juggling variables everywhere, arrays let you line them up neatly lik
 
 :::info Imagine This
 Without arrays, managing 100 student marks means writing 100 separate variables. 😵  
-With arrays, you just say: *“Hey, here’s one variable that can hold 100 values!”*
+With arrays, you just say: _“Hey, here’s one variable that can hold 100 values!”_
 :::
 
 <Tabs>
@@ -48,13 +48,13 @@ int students[5] = {85, 90, 78, 92, 88};
 
 ## 🔑 Key Characteristics
 
-| Property | Description |
-|----------|-------------|
-| **Fixed Size** | Decide size at declaration |
-| **Same Data Type** | All elements must be of same type |
-| **Contiguous Memory** | Stored side by side in memory |
-| **Zero-Indexed** | First element is at index `0` |
-| **Random Access** | Access any element directly |
+| Property              | Description                       |
+| --------------------- | --------------------------------- |
+| **Fixed Size**        | Decide size at declaration        |
+| **Same Data Type**    | All elements must be of same type |
+| **Contiguous Memory** | Stored side by side in memory     |
+| **Zero-Indexed**      | First element is at index `0`     |
+| **Random Access**     | Access any element directly       |
 
 ---
 
@@ -131,18 +131,18 @@ Index:     0      1      2      3      4
 
 int main() {
     int arr[5] = {10, 20, 30, 40, 50};
-    
+
     printf("First element: %d\n", arr[0]);
     printf("Last element: %d\n", arr[4]);
-    
+
     arr[2] = 35;
     printf("Modified third element: %d\n", arr[2]);
-    
+
     printf("\nAll elements:\n");
     for (int i = 0; i < 5; i++) {
         printf("arr[%d] = %d\n", i, arr[i]);
     }
-    
+
     return 0;
 }
 ```
@@ -175,20 +175,20 @@ arr[4] = 50
 
 int main() {
     int n, marks[50];
-    
+
     printf("Enter number of students: ");
     scanf("%d", &n);
-    
+
     for (int i = 0; i < n; i++) {
         printf("Student %d: ", i + 1);
         scanf("%d", &marks[i]);
     }
-    
+
     printf("\nMarks entered:\n");
     for (int i = 0; i < n; i++) {
         printf("Student %d: %d\n", i + 1, marks[i]);
     }
-    
+
     return 0;
 }
 ```
@@ -329,18 +329,18 @@ for (int i = 0; i < 3; i++) {
 
 ## 🏆 Common Problems to Try
 
-- 🔄 Reverse an array  
-- 🥈 Find the second largest element  
-- 🚫 Remove duplicates  
+- 🔄 Reverse an array
+- 🥈 Find the second largest element
+- 🚫 Remove duplicates
 
 ---
 
 ## ⚠️ Limitations & Best Practices
 
-- Size is **fixed** at compile-time  
-- No automatic bounds checking (be careful!)  
-- Use constants for array sizes  
-- Always initialize arrays to avoid garbage values  
+- Size is **fixed** at compile-time
+- No automatic bounds checking (be careful!)
+- Use constants for array sizes
+- Always initialize arrays to avoid garbage values
 
 ```c
 #define MAX_SIZE 100
@@ -351,8 +351,8 @@ int arr[MAX_SIZE] = {0};
 
 ## 🎓 Quick Quiz
 
-What is the index of the first element in a C array?  
+What is the index of the first element in a C array?
 
-- [ ] 1  
-- [x] 0 ✅  
-- [ ] -1  
+- [ ] 1
+- [x] 0 ✅
+- [ ] -1

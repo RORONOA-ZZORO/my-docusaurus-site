@@ -3,30 +3,30 @@ id: unit2-data-types
 title: "🔤 Unit 2: Data Types, Variables & Constants"
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # 🔤 Unit 2: Data Types, Variables & Constants
 
 Welcome back, coder-in-training! 👋  
 In this unit, we’ll dive into the **building blocks of C** — data types, variables, and constants.  
-Think of these as the *alphabet* of programming: once you master them, you can form meaningful “sentences” (programs). ✨
+Think of these as the _alphabet_ of programming: once you master them, you can form meaningful “sentences” (programs). ✨
 
 ---
 
 ## 📦 Data Types in C
 
-Data types tell the computer **what kind of data** you want to store.  
+Data types tell the computer **what kind of data** you want to store.
 
 ### 🏗 Primary Data Types
 
-| Data Type | Keyword | Size (bytes) | Range | Format Specifier |
-|-----------|---------|--------------|-------|------------------|
-| **Character** | `char` | 1 | -128 to 127 | %c |
-| **Integer** | `int` | 4 | -2,147,483,648 to 2,147,483,647 | %d or %i |
-| **Float** | `float` | 4 | 3.4E-38 to 3.4E+38 | %f |
-| **Double** | `double` | 8 | 1.7E-308 to 1.7E+308 | %lf |
-| **Void** | `void` | 0 | No value | - |
+| Data Type     | Keyword  | Size (bytes) | Range                           | Format Specifier |
+| ------------- | -------- | ------------ | ------------------------------- | ---------------- |
+| **Character** | `char`   | 1            | -128 to 127                     | %c               |
+| **Integer**   | `int`    | 4            | -2,147,483,648 to 2,147,483,647 | %d or %i         |
+| **Float**     | `float`  | 4            | 3.4E-38 to 3.4E+38              | %f               |
+| **Double**    | `double` | 8            | 1.7E-308 to 1.7E+308            | %lf              |
+| **Void**      | `void`   | 0            | No value                        | -                |
 
 ---
 
@@ -34,12 +34,12 @@ Data types tell the computer **what kind of data** you want to store.
 
 Modifiers tweak the size and range of basic data types:
 
-| Modifier | Used With | Purpose |
-|----------|-----------|---------|
-| `short` | int | Reduces size (2 bytes) |
-| `long` | int, double | Increases size |
-| `signed` | int, char | Allows negatives (default) |
-| `unsigned` | int, char | Only positive values |
+| Modifier   | Used With   | Purpose                    |
+| ---------- | ----------- | -------------------------- |
+| `short`    | int         | Reduces size (2 bytes)     |
+| `long`     | int, double | Increases size             |
+| `signed`   | int, char   | Allows negatives (default) |
+| `unsigned` | int, char   | Only positive values       |
 
 ```c
 short int a;           // 2 bytes: -32,768 to 32,767
@@ -100,19 +100,19 @@ int a = 10, b = 20, c = 30;
 
 ✅ Must start with a letter or underscore  
 ✅ Case sensitive (`age`, `Age`, `AGE` are different)  
-❌ No spaces, no special symbols, no keywords  
+❌ No spaces, no special symbols, no keywords
 
 ```c
 // Good
-int studentAge;        
-float total_salary;    
-char GRADE;           
-int _privateVar;      
+int studentAge;
+float total_salary;
+char GRADE;
+int _privateVar;
 
 // Bad
-int a;                
-int x1234;           
-int myVariableForStoringTheAgeOfStudent;  
+int a;
+int x1234;
+int myVariableForStoringTheAgeOfStudent;
 ```
 
 ---
@@ -124,6 +124,7 @@ Constants are values that **cannot change** once set. Like your date of birth �
 ### Types of Constants
 
 #### 🔢 Literals
+
 ```c
 10, -50, 0x1A, 077   // Integers
 3.14, -0.5, 2.5e3    // Floating
@@ -158,16 +159,16 @@ const char GRADE = 'A';
 
 ### 🎹 Escape Sequences
 
-| Sequence | Meaning |
-|----------|---------|
-| `\n` | New line |
-| `\t` | Tab |
-| `\\` | Backslash |
-| `\"` | Double quote |
-| `\'` | Single quote |
-| `\0` | Null terminator |
-| `\b` | Backspace |
-| `\r` | Carriage return |
+| Sequence | Meaning         |
+| -------- | --------------- |
+| `\n`     | New line        |
+| `\t`     | Tab             |
+| `\\`     | Backslash       |
+| `\"`     | Double quote    |
+| `\'`     | Single quote    |
+| `\0`     | Null terminator |
+| `\b`     | Backspace       |
+| `\r`     | Carriage return |
 
 ---
 
@@ -177,13 +178,13 @@ Operators are the tools 🔧 that let you work with values.
 
 ### Arithmetic Operators
 
-| Operator | Example | Meaning |
-|----------|---------|---------|
-| `+` | `a + b` | Add |
-| `-` | `a - b` | Subtract |
-| `*` | `a * b` | Multiply |
-| `/` | `a / b` | Divide |
-| `%` | `a % b` | Remainder |
+| Operator | Example | Meaning   |
+| -------- | ------- | --------- |
+| `+`      | `a + b` | Add       |
+| `-`      | `a - b` | Subtract  |
+| `*`      | `a * b` | Multiply  |
+| `/`      | `a / b` | Divide    |
+| `%`      | `a % b` | Remainder |
 
 <Tabs>
   <TabItem value="int" label="Integer Division">
@@ -206,37 +207,37 @@ float result2 = 10.0 / 3; // Result = 3.333...
 
 ### Relational Operators
 
-| Operator | Example | Meaning |
-|----------|---------|---------|
-| `==` | `a == b` | Equal |
-| `!=` | `a != b` | Not equal |
-| `>` | `a > b` | Greater |
-| `<` | `a < b` | Less |
-| `>=` | `a >= b` | Greater/Equal |
-| `<=` | `a <= b` | Less/Equal |
+| Operator | Example  | Meaning       |
+| -------- | -------- | ------------- |
+| `==`     | `a == b` | Equal         |
+| `!=`     | `a != b` | Not equal     |
+| `>`      | `a > b`  | Greater       |
+| `<`      | `a < b`  | Less          |
+| `>=`     | `a >= b` | Greater/Equal |
+| `<=`     | `a <= b` | Less/Equal    |
 
 ---
 
 ### Logical Operators
 
-| Operator | Example | True If... |
-|----------|---------|------------|
-| `&&` | `(a > 5) && (b < 10)` | Both true |
-| `||` | `(a > 5) || (b < 10)` | At least one true |
-| `!` | `!(a > 5)` | Reverses result |
+| Operator | Example               | True If...      |
+| -------- | --------------------- | --------------- | -------- | --- | --------- | ----------------- |
+| `&&`     | `(a > 5) && (b < 10)` | Both true       |
+| `        |                       | `               | `(a > 5) |     | (b < 10)` | At least one true |
+| `!`      | `!(a > 5)`            | Reverses result |
 
 ---
 
 ### Assignment Operators
 
-| Operator | Example | Equivalent |
-|----------|---------|------------|
-| `=` | `a = 5` | Assign |
-| `+=` | `a += 3` | `a = a + 3` |
-| `-=` | `a -= 3` | `a = a - 3` |
-| `*=` | `a *= 3` | `a = a * 3` |
-| `/=` | `a /= 3` | `a = a / 3` |
-| `%=` | `a %= 3` | `a = a % 3` |
+| Operator | Example  | Equivalent  |
+| -------- | -------- | ----------- |
+| `=`      | `a = 5`  | Assign      |
+| `+=`     | `a += 3` | `a = a + 3` |
+| `-=`     | `a -= 3` | `a = a - 3` |
+| `*=`     | `a *= 3` | `a = a * 3` |
+| `/=`     | `a /= 3` | `a = a / 3` |
+| `%=`     | `a %= 3` | `a = a % 3` |
 
 ---
 
@@ -307,29 +308,29 @@ int main() {
     int marks = 85;
     float percentage;
     char grade;
-    
+
     percentage = (float)marks / MAX_MARKS * 100;
-    
-    grade = (percentage >= 90) ? 'A' : 
-            (percentage >= 80) ? 'B' : 
-            (percentage >= 70) ? 'C' : 
+
+    grade = (percentage >= 90) ? 'A' :
+            (percentage >= 80) ? 'B' :
+            (percentage >= 70) ? 'C' :
             (percentage >= 60) ? 'D' : 'F';
-    
+
     printf("=== Student Report Card ===\n");
     printf("Marks: %d/%d\n", marks, MAX_MARKS);
     printf("Percentage: %.2f%%\n", percentage);
     printf("Grade: %c\n", grade);
-    
+
     if (marks >= 40 && marks <= MAX_MARKS) {
         printf("Status: PASS\n");
     } else {
         printf("Status: FAIL\n");
     }
-    
+
     int bonus = 5;
     marks += bonus;
     printf("After bonus: %d\n", marks);
-    
+
     return 0;
 }
 ```
@@ -338,7 +339,7 @@ int main() {
 
 ## 📝 Quick Quiz
 
-What is the difference between **pre-increment** and **post-increment**?  
+What is the difference between **pre-increment** and **post-increment**?
 
-- [ ] No difference  
-- [x] Pre-increment increases before using, post-increment after ✅  
+- [ ] No difference
+- [x] Pre-increment increases before using, post-increment after ✅

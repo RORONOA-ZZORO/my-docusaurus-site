@@ -74,6 +74,15 @@ const config = {
         onUntruncatedBlogPosts: 'ignore',
       },
     ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'take-path',
+        path: 'take-path',
+        routeBasePath: 'take-path',
+        sidebarPath: false,
+      },
+    ],
   ],
 
 
@@ -131,6 +140,7 @@ const config = {
             position: 'left',
             label: 'Docs',
           },
+          { to: '/take-path', label: 'Career Paths', position: 'left' },
           { to: '/news', label: 'News', position: 'left' },
           { to: '/blog', label: 'Blog', position: 'left' },
           {

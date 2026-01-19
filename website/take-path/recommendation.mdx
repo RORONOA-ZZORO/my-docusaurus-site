@@ -1,0 +1,219 @@
+---
+title: Career Recommender
+hide_table_of_contents: true
+---
+
+import React, { useState } from 'react';
+import CareerCard from '@site/src/components/Career/CareerCard';
+
+export const Recommender = () => {
+  const [step, setStep] = useState(0); // 0: Start, 1-4: Questions, 5: Results
+  const [answers, setAnswers] = useState({
+    stage: '',
+    interest: '',
+    time: '',
+    preference: ''
+  });
+
+  const pathData = {
+    frontend: { name: 'Frontend Developer', description: 'Build the visual and interactive parts of websites that users see and touch.', time: '4-6 Months', link: '/take-path/paths/frontend', skills: 'HTML, CSS, JavaScript, React' },
+    backend: { name: 'Backend Developer', description: 'Build the "brains" behind the website—databases, servers, and APIs.', time: '6-8 Months', link: '/take-path/paths/backend', skills: 'Node.js, Python, SQL, Servers' },
+    fullstack: { name: 'Fullstack Developer', description: 'Master both Frontend and Backend to build complete, end-to-end applications.', time: '10-12 Months', link: '/take-path/paths/fullstack', skills: 'React, Node.js, Databases' },
+    'data-science': { name: 'Data Scientist', description: 'Uncover patterns in data to help businesses make smart, data-driven decisions.', time: '6-9 Months', link: '/take-path/paths/data-science', skills: 'Python, Statistics, SQL' },
+    'ai-ml': { name: 'AI & ML Engineer', description: 'Teach computers how to learn and make predictions from data.', time: '12+ Months', link: '/take-path/paths/ai-ml', skills: 'Python, TensorFlow, PyTorch' },
+    cybersecurity: { name: 'Cybersecurity', description: 'Protect systems, networks, and data from digital attacks and hackers.', time: '6-10 Months', link: '/take-path/paths/cybersecurity', skills: 'Networking, Linux, Hacking' },
+    'cloud-devops': { name: 'Cloud & DevOps', description: 'Manage infrastructure and automate the process of shipping software.', time: '8-10 Months', link: '/take-path/paths/cloud-devops', skills: 'AWS, Docker, Kubernetes' },
+    networking: { name: 'Network Engineer', description: 'Design and manage the digital highways that connect devices.', time: '4-6 Months', link: '/take-path/paths/networking', skills: 'TCP/IP, Cisco, Firewalls' },
+    'mobile-dev': { name: 'Mobile Developer', description: 'Create powerful applications that live on iOS and Android devices.', time: '6-8 Months', link: '/take-path/paths/mobile-dev', skills: 'Flutter, React Native, Swift' },
+    'ui-ux': { name: 'UI/UX Designer', description: 'Design beautiful, user-centered experiences for websites and apps.', time: '3-5 Months', link: '/take-path/paths/ui-ux', skills: 'Figma, Research, Prototyping' }
+  };
+
+  const handleAnswer = (key, value) => {
+    setAnswers({ ...answers, [key]: value });
+    setStep(step + 1);
+  };
+
+  const reset = () => {
+    setStep(1);
+    setAnswers({ stage: '', interest: '', time: '', preference: '' });
+  };
+
+  const getResults = () => {
+    let primary = '';
+    let secondary = '';
+    let primaryReason = '';
+    let secondaryReason = '';
+
+    const { interest, preference, time } = answers;
+
+    if (interest === 'uiux') {
+      primary = 'ui-ux';
+      secondary = 'frontend';
+      primaryReason = 'You enjoy designing interfaces and thinking about the user experience.';
+      secondaryReason = 'Frontend skills complement UI/UX design perfectly and allow you to build what you design.';
+    } else if (interest === 'logic') {
+      primary = 'backend';
+      secondary = 'fullstack';
+      primaryReason = 'You prefer solving logic problems and building the "engine" of applications.';
+      secondaryReason = 'Fullstack development allows you to apply your logic across the entire application.';
+    } else if (interest === 'data') {
+      primary = 'data-science';
+      secondary = 'ai-ml';
+      primaryReason = 'Your interest in patterns and data makes you a great fit for decoding complex information.';
+      secondaryReason = 'AI/ML is the natural progression for someone who enjoys working with data patterns.';
+    } else if (interest === 'security') {
+      primary = 'cybersecurity';
+      secondary = 'networking';
+      primaryReason = 'You want to protect systems and stay ahead of digital threats.';
+      secondaryReason = 'Deep networking knowledge is the foundation of any security expert.';
+    } else if (interest === 'infrastructure') {
+      primary = 'cloud-devops';
+      secondary = 'networking';
+      primaryReason = 'You are fascinated by the scale and automation of modern cloud systems.';
+      secondaryReason = 'Networking is vital for managing complex cloud infrastructures.';
+    } else {
+      // Unsure / Exploration
+      if (preference === 'visual') {
+        primary = 'frontend';
+        secondary = 'ui-ux';
+        primaryReason = 'Starting with Frontend is the best way to see immediate visual results from your work.';
+        secondaryReason = 'UI/UX helps you understand why products should look the way they do.';
+      } else if (preference === 'logic' || preference === 'hands-on') {
+        primary = 'fullstack';
+        secondary = 'backend';
+        primaryReason = 'Building complete products gives you a bird\'s eye view of the entire tech landscape.';
+        secondaryReason = 'Backend focuses on the core logic that powers everything else.';
+      } else {
+        primary = 'frontend';
+        secondary = 'fullstack';
+        primaryReason = 'Frontend is the most beginner-friendly entry point to the world of coding.';
+        secondaryReason = 'Once you learn the basics, Fullstack opens up every door in the industry.';
+      }
+    }
+
+    return { primary, secondary, primaryReason, secondaryReason };
+  };
+
+  const renderQuestion = () => {
+    switch (step) {
+      case 0:
+        return (
+          <div className="card shadow--md padding--lg text--center recommender-card">
+            <h2>Ready to find your perfect path? 🚀</h2>
+            <p className="margin-bottom--lg">Answer 4 quick questions and we'll match you with the best career roles in tech.</p>
+            <button className="button button--primary button--lg" onClick={() => setStep(1)}>Start Identification</button>
+          </div>
+        );
+      case 1:
+        return (
+          <div className="card shadow--md padding--lg recommender-card">
+            <p className="text--secondary margin-bottom--sm">Step 1 of 4</p>
+            <h3 className="margin-bottom--md">What best describes you right now?</h3>
+            <div className="choices-container">
+              <button className="choice-button" onClick={() => handleAnswer('stage', 'student')}>🎓 Student / Absolute Beginner</button>
+              <button className="choice-button" onClick={() => handleAnswer('stage', 'switch')}>🔄 Working professional switching careers</button>
+              <button className="choice-button" onClick={() => handleAnswer('stage', 'upskill')}>🚀 Already in tech, upskilling</button>
+            </div>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="card shadow--md padding--lg recommender-card">
+            <p className="text--secondary margin-bottom--sm">Step 2 of 4</p>
+            <h3 className="margin-bottom--md">What type of work sounds most interesting to you?</h3>
+            <div className="choices-container">
+              <button className="choice-button" onClick={() => handleAnswer('interest', 'uiux')}>🎨 Designing and building user interfaces</button>
+              <button className="choice-button" onClick={() => handleAnswer('interest', 'logic')}>⚙️ Solving logic problems and building systems</button>
+              <button className="choice-button" onClick={() => handleAnswer('interest', 'data')}>📊 Working with data, patterns, and predictions</button>
+              <button className="choice-button" onClick={() => handleAnswer('interest', 'security')}>🛡️ Security, hacking, and protecting systems</button>
+              <button className="choice-button" onClick={() => handleAnswer('interest', 'infrastructure')}>☁️ Managing infrastructure and cloud systems</button>
+              <button className="choice-button" onClick={() => handleAnswer('interest', 'unsure')}>🤷 Not sure / I want to explore</button>
+            </div>
+          </div>
+        );
+      case 3:
+        return (
+          <div className="card shadow--md padding--lg recommender-card">
+            <p className="text--secondary margin-bottom--sm">Step 3 of 4</p>
+            <h3 className="margin-bottom--md">How much time can you realistically give per week?</h3>
+            <div className="choices-container">
+              <button className="choice-button" onClick={() => handleAnswer('time', 'low')}>🕓 Less than 5 hours</button>
+              <button className="choice-button" onClick={() => handleAnswer('time', 'med')}>📅 5–10 hours</button>
+              <button className="choice-button" onClick={() => handleAnswer('time', 'high')}>⏳ 10–20 hours</button>
+              <button className="choice-button" onClick={() => handleAnswer('time', 'max')}>🔥 20+ hours</button>
+            </div>
+          </div>
+        );
+      case 4:
+        return (
+          <div className="card shadow--md padding--lg recommender-card">
+            <p className="text--secondary margin-bottom--sm">Step 4 of 4</p>
+            <h3 className="margin-bottom--md">How do you prefer to learn?</h3>
+            <div className="choices-container">
+              <button className="choice-button" onClick={() => handleAnswer('preference', 'visual')}>👁️ Visual and creative</button>
+              <button className="choice-button" onClick={() => handleAnswer('preference', 'logic')}>🧠 Logical and problem-solving</button>
+              <button className="choice-button" onClick={() => handleAnswer('preference', 'hands-on')}>🛠️ Hands-on projects</button>
+              <button className="choice-button" onClick={() => handleAnswer('preference', 'theory')}>📖 Theory first, practice later</button>
+            </div>
+          </div>
+        );
+      case 5:
+        const results = getResults();
+        return (
+          <div>
+            <div className="alert alert--success margin-bottom--lg" role="alert">
+              <h2>🎉 We found your matches!</h2>
+              <p>Based on your answers, these paths offer the best growth and alignment with your interests.</p>
+            </div>
+            
+            <div className="row">
+              <CareerCard 
+                {...pathData[results.primary]} 
+                type="primary" 
+                reason={results.primaryReason}
+              />
+              <CareerCard 
+                {...pathData[results.secondary]} 
+                type="secondary" 
+                reason={results.secondaryReason}
+              />
+            </div>
+
+            <div className="text--center margin-top--xl">
+              <button className="button button--outline button--secondary button--lg" onClick={reset}>Retake Assessment</button>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="container margin-vert--lg">
+      <div className="row">
+        <div className="col col--10 col--offset-1">
+          {renderQuestion()}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+# 🧭 Career Path Finder
+
+Finding the right career in tech is an exciting journey! This interactive tool acts like a friendly mentor, guiding you to the most suitable path based on your current stage, interests, and learning style.
+
+---
+
+<Recommender />
+
+---
+
+### 🌟 Why Take This Assessment?
+
+- **Save Time**: Don't waste months on a path that doesn't inspire you.
+- **Clarify Goals**: Better understand what you actually enjoy doing.
+- **Get Started Faster**: Each recommendation links directly to a complete beginner-to-job roadmap.
+
+**Not ready for the assessment?** You can always [browse all career paths manually](/take-path).

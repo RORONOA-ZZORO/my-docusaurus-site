@@ -99,15 +99,15 @@
         "order": 5,
         "source": "Semester 1/C-Programming/Notes/unit5-arrays/index.html"
     },
-    "semester_1_c_programming_pyq": {
-        "title": "PYQ",
+    "semester_1_c_programming_practice_questions": {
+        "title": "Practice Questions",
         "semester": 1,
         "subject": "C Programming",
-        "category": "pyq",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 5,
-        "source": "Semester 1/C-Programming/PYQ/index.html"
+        "source": "Semester 1/C-Programming/Practice-Questions/index.html"
     },
     "semester_1_cfoa_handout": {
         "title": "Handout",
@@ -149,15 +149,15 @@
         "order": 2,
         "source": "Semester 1/CFOA/Notes/intro/index.html"
     },
-    "semester_1_cfoa_pyq": {
-        "title": "PYQ",
+    "semester_1_cfoa_practice_questions": {
+        "title": "Practice Questions",
         "semester": 1,
         "subject": "CFOA",
-        "category": "pyq",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 5,
-        "source": "Semester 1/CFOA/PYQ/index.html"
+        "source": "Semester 1/CFOA/Practice-Questions/index.html"
     },
     "semester_1_digital_logic_design_handout": {
         "title": "Handout",
@@ -199,15 +199,15 @@
         "order": 2,
         "source": "Semester 1/Digital-Logic&Design/Notes/intro/index.html"
     },
-    "semester_1_digital_logic_design_pyq": {
-        "title": "PYQ",
+    "semester_1_digital_logic_design_practice_questions": {
+        "title": "Practice Questions",
         "semester": 1,
         "subject": "Digital Logic&Design",
-        "category": "pyq",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 5,
-        "source": "Semester 1/Digital-Logic&Design/PYQ/index.html"
+        "source": "Semester 1/Digital-Logic&Design/Practice-Questions/index.html"
     },
     "semester_1_english_communication_skills_handout": {
         "title": "Handout",
@@ -239,15 +239,15 @@
         "order": 2,
         "source": "Semester 1/English-Communication-Skills/Notes/index.html"
     },
-    "semester_1_english_communication_skills_pyq": {
-        "title": "PYQ",
+    "semester_1_english_communication_skills_practice_questions": {
+        "title": "Practice Questions",
         "semester": 1,
         "subject": "English Communication Skills",
-        "category": "pyq",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 5,
-        "source": "Semester 1/English-Communication-Skills/PYQ/index.html"
+        "source": "Semester 1/English-Communication-Skills/Practice-Questions/index.html"
     },
     "semester_1_environmental_science_handout": {
         "title": "Handout",
@@ -309,15 +309,15 @@
         "order": 1,
         "source": "Semester 1/Environmental-Science/Notes/UNIT_1/index.html"
     },
-    "semester_1_environmental_science_pyq": {
-        "title": "PYQ",
+    "semester_1_environmental_science_practice_questions": {
+        "title": "Practice Questions",
         "semester": 1,
         "subject": "Environmental Science",
-        "category": "pyq",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 5,
-        "source": "Semester 1/Environmental-Science/PYQ/index.html"
+        "source": "Semester 1/Environmental-Science/Practice-Questions/index.html"
     },
     "semester_1_fmca_handout": {
         "title": "Handout",
@@ -359,15 +359,15 @@
         "order": 2,
         "source": "Semester 1/FMCA/Notes/intro/index.html"
     },
-    "semester_1_fmca_pyq": {
-        "title": "PYQ",
+    "semester_1_fmca_practice_questions": {
+        "title": "Practice Questions",
         "semester": 1,
         "subject": "FMCA",
-        "category": "pyq",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 5,
-        "source": "Semester 1/FMCA/PYQ/index.html"
+        "source": "Semester 1/FMCA/Practice-Questions/index.html"
     },
     "semester_1": {
         "title": "Semester 1",
@@ -439,15 +439,15 @@
         "order": 2,
         "source": "Semester 1/Psychology/Notes/Scope-of-psychology/index.html"
     },
-    "semester_1_psychology_pyq": {
-        "title": "PYQ",
+    "semester_1_psychology_practice_questions": {
+        "title": "Practice Questions",
         "semester": 1,
         "subject": "Psychology",
-        "category": "pyq",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 5,
-        "source": "Semester 1/Psychology/PYQ/index.html"
+        "source": "Semester 1/Psychology/Practice-Questions/index.html"
     },
     "semester_1_shared_resources_handout": {
         "title": "Handout",
@@ -489,15 +489,15 @@
         "order": 2,
         "source": "Semester 1/Shared-Resources/Notes/intro/index.html"
     },
-    "semester_1_shared_resources_pyq": {
-        "title": "PYQ",
+    "semester_1_shared_resources_practice_questions": {
+        "title": "Practice Questions",
         "semester": 1,
         "subject": "Shared Resources",
-        "category": "pyq",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 5,
-        "source": "Semester 1/Shared-Resources/PYQ/index.html"
+        "source": "Semester 1/Shared-Resources/Practice-Questions/index.html"
     },
     "semester_1_understanding_india_handout": {
         "title": "Handout",
@@ -539,15 +539,15 @@
         "order": 2,
         "source": "Semester 1/Understanding-India/Notes/intro/index.html"
     },
-    "semester_1_understanding_india_pyq": {
-        "title": "PYQ",
+    "semester_1_understanding_india_practice_questions": {
+        "title": "Practice Questions",
         "semester": 1,
         "subject": "Understanding India",
-        "category": "pyq",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 5,
-        "source": "Semester 1/Understanding-India/PYQ/index.html"
+        "source": "Semester 1/Understanding-India/Practice-Questions/index.html"
     },
     "semester_2_computer_programming_ii_assignments": {
         "title": "Assignments",
@@ -579,15 +579,15 @@
         "order": 0,
         "source": "Semester 2/Computer Programming – II/index.html"
     },
-    "semester_2_computer_programming_ii_miscactivities": {
-        "title": "Misc",
+    "semester_2_computer_programming_ii_practice_questions": {
+        "title": "Practice Questions",
         "semester": 2,
         "subject": "Computer Programming – II",
-        "category": "misc",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 4,
-        "source": "Semester 2/Computer Programming – II/MiscActivities/index.html"
+        "source": "Semester 2/Computer Programming – II/Practice-Questions/index.html"
     },
     "semester_2_computer_programming_ii_notes": {
         "title": "Notes",
@@ -629,15 +629,15 @@
         "order": 0,
         "source": "Semester 2/Discrete Mathematics/index.html"
     },
-    "semester_2_discrete_mathematics_miscactivities": {
-        "title": "Misc",
+    "semester_2_discrete_mathematics_practice_questions": {
+        "title": "Practice Questions",
         "semester": 2,
         "subject": "Discrete Mathematics",
-        "category": "misc",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 4,
-        "source": "Semester 2/Discrete Mathematics/MiscActivities/index.html"
+        "source": "Semester 2/Discrete Mathematics/Practice-Questions/index.html"
     },
     "semester_2_discrete_mathematics_notes": {
         "title": "Notes",
@@ -658,6 +658,16 @@
         "isHub": true,
         "order": 0,
         "source": "Semester 2/extras/index.html"
+    },
+    "semester_2_extras_practice_questions": {
+        "title": "Practice Questions",
+        "semester": 2,
+        "subject": "Extras",
+        "category": "practice-questions",
+        "unit": null,
+        "isHub": false,
+        "order": 4,
+        "source": "Semester 2/extras/Practice-Questions/index.html"
     },
     "semester_2_functional_english_assignments": {
         "title": "Assignments",
@@ -689,15 +699,15 @@
         "order": 0,
         "source": "Semester 2/Functional English/index.html"
     },
-    "semester_2_functional_english_miscactivities": {
-        "title": "Misc",
+    "semester_2_functional_english_practice_questions": {
+        "title": "Practice Questions",
         "semester": 2,
         "subject": "Functional English",
-        "category": "misc",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 4,
-        "source": "Semester 2/Functional English/MiscActivities/index.html"
+        "source": "Semester 2/Functional English/Practice-Questions/index.html"
     },
     "semester_2_functional_english_notes": {
         "title": "Notes",
@@ -739,15 +749,15 @@
         "order": 0,
         "source": "Semester 2/Linux & Shell Programming/index.html"
     },
-    "semester_2_linux_shell_programming_miscactivities": {
-        "title": "Misc",
+    "semester_2_linux_shell_programming_practice_questions": {
+        "title": "Practice Questions",
         "semester": 2,
         "subject": "Linux & Shell Programming",
-        "category": "misc",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 4,
-        "source": "Semester 2/Linux & Shell Programming/MiscActivities/index.html"
+        "source": "Semester 2/Linux & Shell Programming/Practice-Questions/index.html"
     },
     "semester_2_linux_shell_programming_notes": {
         "title": "Notes",
@@ -789,15 +799,15 @@
         "order": 0,
         "source": "Semester 2/Multimedia System/index.html"
     },
-    "semester_2_multimedia_system_miscactivities": {
-        "title": "Misc",
+    "semester_2_multimedia_system_practice_questions": {
+        "title": "Practice Questions",
         "semester": 2,
         "subject": "Multimedia System",
-        "category": "misc",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 4,
-        "source": "Semester 2/Multimedia System/MiscActivities/index.html"
+        "source": "Semester 2/Multimedia System/Practice-Questions/index.html"
     },
     "semester_2_multimedia_system_notes": {
         "title": "Notes",
@@ -839,15 +849,15 @@
         "order": 0,
         "source": "Semester 2/Statistics/index.html"
     },
-    "semester_2_statistics_miscactivities": {
-        "title": "Misc",
+    "semester_2_statistics_practice_questions": {
+        "title": "Practice Questions",
         "semester": 2,
         "subject": "Statistics",
-        "category": "misc",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 4,
-        "source": "Semester 2/Statistics/MiscActivities/index.html"
+        "source": "Semester 2/Statistics/Practice-Questions/index.html"
     },
     "semester_2_statistics_notes": {
         "title": "Notes",
@@ -889,15 +899,15 @@
         "order": 0,
         "source": "Semester 2/Technical Report Writing/index.html"
     },
-    "semester_2_technical_report_writing_miscactivities": {
-        "title": "Misc",
+    "semester_2_technical_report_writing_practice_questions": {
+        "title": "Practice Questions",
         "semester": 2,
         "subject": "Technical Report Writing",
-        "category": "misc",
+        "category": "practice-questions",
         "unit": null,
         "isHub": false,
         "order": 4,
-        "source": "Semester 2/Technical Report Writing/MiscActivities/index.html"
+        "source": "Semester 2/Technical Report Writing/Practice-Questions/index.html"
     },
     "semester_2_technical_report_writing_notes": {
         "title": "Notes",
